@@ -30,7 +30,7 @@ export const formatBalance = (balance: number, mintAddress: string, decimal: num
     decimals: decimal, // make sure this is correct!
     cluster: "devnet", //process.env.NEXT_PUBLIC_NETWORK,
   });
-  return TokenAmount.toUiAmountSync({ amount: new BN(balance), token: token }).toString();
+  return TokenAmount.toUiAmountSync({ amount: new BN(balance), token: token }).toLocaleString(undefined, { minimumFractionDigits: 6 });
 };
 
 // handle overflow
