@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply scroll-smooth overflow-x-hidden  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-500;
+  }
+
+  * {
+    @apply transition-all;
+  }
+}
+
+@layer components {
+  /* button component style */
+  button {
+    @apply relative bg-100% z-[100] hover:before:opacity-100;
+  }
+  button::before {
+    @apply content-[""] block absolute w-full h-full top-0 left-0 z-[-100] opacity-0 rounded-[inherit] transition-opacity duration-500 ease-in-out bg-primary_gradient_hover shadow-button_hover;
+  }
+
+  /* border animation for hover effect of menu */
+  .animate-border {
+    @apply hover:after:scale-100;
+  }
+  .animate-border::after {
+    @apply content-[""] absolute w-full h-[2px] left-px -bottom-[6px] bg-white transition-all origin-left duration-300 ease-in scale-0;
+  }
+}
+
+/* customize range slider */
+.range-slider {
+  @apply appearance-none bg-second_gradient mt-[15px] h-[10px] outline-none transition-opacity rounded-[20px];
+}
+.range-slider::-webkit-slider-thumb {
+  @apply appearance-none bg-white w-[30px] h-[30px] outline-none rounded-[20px] cursor-pointer shadow-range;
+}
+
+/* hide spinner of number input field */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  @apply m-0 appearance-none;
+}
+
+input[type="number"] {
+  @apply [appearance:textfield];
+}
+
+/* customize nprogress bar */
+#nprogress .bar {
+  @apply bg-white;
+}
+
+#nprogress .spinner-icon {
+  @apply border-t-white border-l-white;
+}
+
+/* custom wallet adapter dropdown list  */
+.wallet-adapter-dropdown-list {
+  @apply absolute z-[100] p-0 gap-0 border-[2px] border-white bg-primary_gradient;
+}
+
+.wallet-adapter-dropdown-list-active {
+  @apply p-0 gap-0 translate-x-0 translate-y-[5%];
+}
+
+.wallet-adapter-dropdown-list::before {
+  @apply absolute content-[""] -top-[5px] left-[50%] translate-x-[-50%] border-x-8 border-x-transparent border-b-4 border-b-white;
+}
+
+.wallet-adapter-dropdown-list > li {
+  @apply px-10 py-5;
+}
+
+.wallet-adapter-dropdown-list > li:hover {
+  @apply !bg-[#2a384b40];
+}
