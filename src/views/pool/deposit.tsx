@@ -17,23 +17,7 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
   };
 
   // handle deposit function
-  const handleDeposit = async () => {
-    const provider = AnchorProvider.env();
-    const sdk = new SDK(provider);
-    const vaultKP = Keypair.generate(); //todo:
-    const poolKP = Keypair.generate(); //todo:
-    const vault = new Vault(sdk, vaultKP.publicKey);
-    const pool = await WeightedPool.load(sdk, poolKP.publicKey);
-    const { result: outAmount, tx } = await pool.addLiquidityAndResult({
-      vault,
-      amounts: [3000, 6000, 1000],
-      userKP: vaultKP,
-    });
-    console.log("Out Amount:", outAmount);
-    tx.sign([walletKP]);
-    const signature = await sdk.provider.connection.sendTransaction(tx);
-    await pool.confirmTX(signature);
-
+  const handleDeposit = () => {
     console.log(values, "values");
   };
 
