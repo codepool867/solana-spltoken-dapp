@@ -7,8 +7,8 @@ import SAX from "assets/images/sola-x.png";
 import USDC from "assets/images/usdc.png";
 import USDT from "assets/images/usdt.png";
 
-export const network = process.env.NEXT_PUBLIC_NETWORK as string;
-
+export const NEXT_PUBLIC_NETWORK = "devnet" as string;
+export const network = "devnet" as string;
 // pattern list
 export const floatNumRegex = /^[+-]?\d+(\.\d+)?$/;
 
