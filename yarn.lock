@@ -5963,6 +5963,18 @@ socket.io-parser@~4.2.0:
     "@socket.io/component-emitter" "~3.1.0"
     debug "~4.3.1"
 
+solax-sdk@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/solax-sdk/-/solax-sdk-0.0.0.tgz#9b1c942bccdfa03824e5a8ee905a7b42033fc0c8"
+  integrity sha512-V5fQB8CyZwDRCHCAOZcZ4v4ZFDqSzq/lXre+6amfiaVpVE6Doy4Zf+ajKxo6VLU11iEqbOvRzjsv9phVTb2y5w==
+  dependencies:
+    "@project-serum/anchor" "^0.25.0"
+    "@solana/buffer-layout-utils" "^0.2.0"
+    "@solana/spl-token" "^0.3.5"
+    "@solana/web3.js" "^1.66.2"
+    bn.js "^5.2.1"
+    solax-spl-utils "^0.1.2"
+
 solax-spl-faucet@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/solax-spl-faucet/-/solax-spl-faucet-0.1.1.tgz#ba8621a315cdba9ff57f7bc4e099ee20da46931d"
