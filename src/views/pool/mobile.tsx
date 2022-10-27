@@ -35,8 +35,9 @@ const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ sea
     const dynamicRoute = pairNames.toString().replaceAll(",", "-");
     router.push(`pools/${dynamicRoute}`);
   };
+
   let gridStyle = "z-50 w-full  grid-cols-1 max-w-[800px] laptop:max-w-[560px] gap-6";
-  if (gridStatus) {
+  if (gridStatus && result.length > 1) {
     gridStyle = " w-full grid-cols-2 laptop:grid-cols-1 laptop:max-w-[560px] gap-6";
   }
   return (
