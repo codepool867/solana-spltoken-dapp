@@ -26,5 +26,5 @@ export default function useSwapTokens(pageNumber: number) {
     });
   }, [pageNumber]);
 
-  return { loading, tokens, hasMore };
+  return { tokens, hasMore };
 }
