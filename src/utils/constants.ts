@@ -7,8 +7,22 @@ import SAX from "assets/images/sola-x.png";
 import USDC from "assets/images/usdc.png";
 import USDT from "assets/images/usdt.png";
 
-export const NEXT_PUBLIC_NETWORK = "devnet" as string;
-export const network = "devnet" as string;
+// const SOL
+// const USDT_ICON = "https://cdn.jsdelivr.net/gh/saber-hq/spl-token-icons@master/icons/101/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB.svg"
+// const USDC_ICON
+const aUSDC = "https://assets.coingecko.com/coins/images/14318/small/aUSDC.e260d492.png?1615527797";
+const mSOL = "https://assets.coingecko.com/coins/images/17752/thumb/mSOL.png?1644541955";
+const gSOL =
+  "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/CiBddaPynSdAG2SkbrusBfyrUKdCSXVPHs6rTgSEkfsV/icon.svg";
+const GM =
+  "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Cr45u6cdxB8oz7m3f8b89eacpwZh9DsRdQsNSzwmxh9R/logo.png";
+const WSOL =
+  "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png";
+const daoSOL =
+  "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/GEJpt3Wjmr628FqXxTgxMce1pLntcPV4uFi8ksxMyPQh/logo.png";
+
+export const network = process.env.NEXT_PUBLIC_NETWORK ? (process.env.NEXT_PUBLIC_NETWORK as string) : "devnet";
+
 // pattern list
 export const floatNumRegex = /^[+-]?\d+(\.\d+)?$/;
 
@@ -95,30 +109,30 @@ export const social_list = [
 
 // token_list for swap
 export const token_list = [
-  { name: "SOL", icon: USDC, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
-  { name: "SAX", icon: USDC, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
-  { name: "USDT", icon: USDC, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
+  { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
 ];
 
 export const prefer_token_list = [
-  { name: "SOL", icon: USDC, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
-  { name: "SAX", icon: USDC, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
-  { name: "USDT", icon: USDC, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
+  { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
 ];
 
 // pool list
 export const pool_list = [
   {
     pairs: [
-      { name: "aUSDC", symbol: "aUSDC", icon: USDC, alt: "USDC", mint: "" },
+      { name: "aUSDC", symbol: aUSDC, icon: USDC, alt: "USDC", mint: "" },
       { name: "mSDC", symbol: "mSDC", icon: USDC, alt: "USDC", mint: "" },
       { name: "bUSDC", symbol: "bUSDC", icon: USDC, alt: "USDC", mint: "" },
       { name: "daoUSDC", symbol: "daoUSDC", icon: USDC, alt: "USDC", mint: "" },
     ],
-    liquidity: 20,
-    volume_30d: 30,
+    liquidity: 200000,
+    volume_30d: 300000,
     fees_30d: 30,
     apr_30d: 80,
   },
@@ -127,16 +141,16 @@ export const pool_list = [
       { name: "aUSDT", symbol: "aUSDT", icon: USDC, alt: "USDT", mint: "" },
       { name: "bUSDT", symbol: "bUSDT", icon: USDC, alt: "USDT", mint: "" },
     ],
-    liquidity: 20,
-    volume_30d: 30,
+    liquidity: 200000,
+    volume_30d: 3000000,
     fees_30d: 30,
     apr_30d: 80,
   },
   {
     pairs: [
-      { name: "SOL", symbol: "SOL", icon: USDC, alt: "USDC", mint: "" },
-      { name: "SAX", symbol: "SAX", icon: USDC, alt: "USDC", mint: "" },
-      { name: "SAX", symbol: "SAX", icon: USDC, alt: "USDC", mint: "" },
+      { name: "SOL", symbol: "SOL", icon: SOL, alt: "USDC", mint: "" },
+      { name: "SAX", symbol: "SAX", icon: SAX, alt: "USDC", mint: "" },
+      { name: "SAX", symbol: "SAX", icon: SAX, alt: "USDC", mint: "" },
     ],
     liquidity: 20,
     volume_30d: 30,
@@ -145,12 +159,12 @@ export const pool_list = [
   },
   {
     pairs: [
-      { name: "gSOL", symbol: "gSOL", icon: USDC, alt: "SOL", mint: "" },
-      { name: "SAX", symbol: "SAX", icon: USDC, alt: "SOL", mint: "" },
-      { name: "WSOL", symbol: "WSOL", icon: USDC, alt: "SOL", mint: "" },
-      { name: "GM", symbol: "GM", icon: USDC, alt: "SOL", mint: "" },
-      { name: "mSOL", symbol: "mSOL", icon: USDC, alt: "SOL", mint: "" },
-      { name: "daoSOL", symbol: "daoSOL", icon: USDC, alt: "SOL", mint: "" },
+      { name: "gSOL", symbol: "gSOL", icon: gSOL, alt: "SOL", mint: "" },
+      { name: "SAX", symbol: "SAX", icon: SAX, alt: "SOL", mint: "" },
+      { name: "WSOL", symbol: "WSOL", icon: WSOL, alt: "SOL", mint: "" },
+      { name: "GM", symbol: "GM", icon: GM, alt: "SOL", mint: "" },
+      { name: "mSOL", symbol: "mSOL", icon: mSOL, alt: "SOL", mint: "" },
+      { name: "daoSOL", symbol: "daoSOL", icon: daoSOL, alt: "SOL", mint: "" },
       { name: "oSOL", symbol: "oSOL", icon: USDC, alt: "SOL", mint: "" },
     ],
     liquidity: 20,

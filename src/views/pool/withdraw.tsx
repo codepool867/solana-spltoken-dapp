@@ -2,10 +2,15 @@ import React, { type ChangeEvent, type FC, useState } from "react";
 
 import { Button, Col, Image, Row } from "components";
 import { floatNumRegex, type PoolDetailProps } from "utils";
-
+import { SDK, Vault, WeightedPool } from "solax-sdk/src";
+import { useMainAction, useSDKInit, useTokenInfo } from "contexts";
+import { Keypair } from "@solana/web3.js";
+import { useWallet } from "@solana/wallet-adapter-react";
 const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
   const [percentageAmount, setPercentageAmount] = useState(100);
   const [values, setValues] = useState({});
+  const { signTransaction } = useWallet();
+  const { faucet } = useSDKInit();
 
   // handle to save values of input
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -14,8 +19,20 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
   };
 
   // handle deposit function
-  const handleWithdraw = () => {
-    console.log(values, "values");
+  const handleWithdraw = async () => {
+    // if (faucet) {
+    //   const provider = faucet.provider;
+    //   const sdk = new SDK(provider);
+    //   const vaultKP = Keypair.generate(); //todo:
+    //   const poolKP = Keypair.generate(); //todo:
+    //   const vault = new Vault(sdk, vaultKP.publicKey);
+    //   const pool = new WeightedPool(sdk, poolKP.publicKey); //const pool = await WeightedPool.load(sdk, poolKP.publicKey);
+    //   const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
+    //     vault,
+    //     amount: 3000,
+    //   });
+    // }
+    // console.log(values, "values");
   };
 
   return (

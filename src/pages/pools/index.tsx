@@ -32,7 +32,7 @@ const Pools = () => {
                 autoFocus
                 placeholder="Filter by symbol"
                 onChange={(e: any) => setSearchValue(e.target.value)}
-                className="rounded-md h-12 w-full bg-transparent border border-white p-2 outline-none"
+                className="rounded-md h-12 w-full bg-transparent border border-white p-2  mr-2 outline-none"
               />
               <PoolGridListButton action={handleGrid} gridStatus={gridStatus}></PoolGridListButton>
             </Row>

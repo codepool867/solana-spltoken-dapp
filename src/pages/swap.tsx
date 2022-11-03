@@ -8,21 +8,56 @@ import { Button, Col, Container, LaunchApp, Page, Row } from "components";
 import { useMainAction, useTokenInfo } from "contexts";
 import { Exchange, TokenModal } from "views";
 import { slippage_list } from "utils";
-
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useSDKInit } from "contexts";
+import { Keypair, PublicKey } from "@solana/web3.js";
+import { SDK, Vault, WeightedPool } from "solax-sdk";
 // swap page
 const Swap = () => {
   const { showModal } = useMainAction();
-  const { inputAmount, slippageValue, setSlippageValue } = useTokenInfo();
+  const { signTransaction, publicKey } = useWallet();
+  // const { faucet } = useSDKInit();
+  const { inputAmount, inputTokenData, outputTokenData, slippageValue, setSlippageValue } = useTokenInfo();
   const [hasOrder, setHasOrder] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   const ref = useDetectClickOutside({
     onTriggered: () => setIsOpen(false),
   });
-
+  const handleSlippageValue = (slipVal: number) => {
+    setIsOpen(false);
+    setSlippageValue(slipVal);
+  };
+  const handleInputSlippageValue = (slipVal: string) => {
+    let result = Number(slipVal);
+    if (result > 1) result = 1;
+    setSlippageValue(result);
+  };
   // handle swap function
-  const handleSwap = () => {
-    console.log(inputAmount, "inputAmount");
+  const handleSwap = async () => {
+    // if (faucet && inputTokenData && inputAmount && outputTokenData) {
+    //   const provider = faucet.provider;
+    //   const sdk = new SDK(provider);
+    //   const vaultKP = Keypair.generate(); //todo:
+    //   const poolKP = Keypair.generate(); //todo:
+    //   const vault = new Vault(sdk, vaultKP.publicKey);
+    //   const pool = new WeightedPool(sdk, poolKP.publicKey); //const pool = await WeightedPool.load(sdk, poolKP.publicKey);
+    //   const { result: outAmount, tx } = await pool.swapAndResult({
+    //     vault,
+    //     fromMintK: new PublicKey(inputTokenData.mint),
+    //     toMintK: new PublicKey(outputTokenData.mint),
+    //     amount: inputAmount,
+    //     userKP: vaultKP,
+    //   });
+    //   console.log("Out Amount:", outAmount);
+    //   if (signTransaction) {
+    //     const signed = await signTransaction(tx); // tx.sign([walletKP]);
+    //     const signature = await provider.connection.sendRawTransaction(signed.serialize());
+    //     await pool.confirmTX(signature);
+    //   }
+    // }
+    // console.log(inputAmount, "inputAmount");
+    // console.log(inputTokenData, "inputTokenData");
   };
 
   return (
@@ -45,7 +80,7 @@ const Swap = () => {
               <Exchange direction={1} order={!hasOrder} />
               <Row className="justify-between font-medium text-[16px]">
                 <p className="pl-[20px] mobile:pl-[15px]">Slippage tolerance</p>
-                <Row action={() => setIsOpen(!isOpen)} className="items-center space-x-2 pr-[20px] mobile:pr-[15px] ">
+                <Row className="items-center space-x-2 pr-[20px] mobile:pr-[15px] ">
                   <p>{slippageValue}%</p>
                   <div ref={ref} className="relative cursor-pointer">
                     <GoSettings size={25} onClick={() => setIsOpen(!isOpen)} className="self-end" />
@@ -54,13 +89,23 @@ const Swap = () => {
                         {slippage_list.map((slippage, index) => (
                           <Row
                             key={`slippage_${index}`}
-                            action={() => setSlippageValue(slippage.value)}
+                            action={() => handleSlippageValue(slippage.value)}
                             className="justify-between items-center"
                           >
-                            <p>{slippage.value}</p>
+                            <p>{slippage.value}%</p>
                             {slippageValue === slippage.value && <GoCheck />}
                           </Row>
                         ))}
+                        <Row className="justify-between items-center">
+                          <input
+                            type="number"
+                            autoFocus
+                            onChange={(e) => {
+                              handleInputSlippageValue(e.target.value);
+                            }}
+                            className=" h-6 w-full bg-transparent  p-2 outline-none"
+                          ></input>
+                        </Row>
                       </div>
                     )}
                   </div>

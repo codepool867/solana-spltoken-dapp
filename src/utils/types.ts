@@ -124,7 +124,15 @@ export interface ImageProps {
 }
 
 export interface GridStatusProps {
-  action?: MouseEventHandler<HTMLDivElement>;
+  action?: MouseEventHandler<HTMLButtonElement>;
   isLoading?: boolean;
   gridStatus: boolean;
+}
+
+export interface PoolProps {
+  pairs: PairProps[];
+  liquidity: number;
+  volume_30d: number;
+  fees_30d: number;
+  apr_30d: number;
 }
