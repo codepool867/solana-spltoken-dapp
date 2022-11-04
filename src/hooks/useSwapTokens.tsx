@@ -3,13 +3,11 @@ import { useMainAction } from "contexts";
 import React, { useEffect, useState } from "react";
 import type { PairProps } from "utils";
 export default function useSwapTokens(pageNumber: number) {
-  const { setIsTXLoading } = useMainAction();
-
+  const { isActionLoading, setIsActionLoading } = useMainAction();
   const [hasMore, setHasMore] = useState(true);
   const [tokens, setTokens] = useState<PairProps[]>([]);
-
   useEffect(() => {
-    setIsTXLoading(true);
+    setIsActionLoading(true);
     axios({
       method: "GET",
       url: "/api/swapToken",
@@ -22,7 +20,7 @@ export default function useSwapTokens(pageNumber: number) {
         if (pageNumber === 1) return res.data;
         return [...prevTokens, ...res.data];
       });
-      setIsTXLoading(false);
+      setIsActionLoading(false);
     });
   }, [pageNumber]);
 

@@ -42,7 +42,7 @@ const Liquidity = () => {
               <p className="text-[36px] tablet:text-[24px] font-bold">{type} Pool</p>
               <Row className="-space-x-2">
                 {poolDetail.map((pair, index) => (
-                  <Image key={`pair_logo_${index}`} src={pair.icon} alt={pair.alt} width={40} height={40} />
+                  <Image key={`pair_logo_${index}`} className="rounded-full" src={pair.icon} alt={pair.alt} width={40} height={40} />
                 ))}
               </Row>
             </Col>

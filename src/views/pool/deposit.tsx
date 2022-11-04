@@ -7,9 +7,11 @@ import { SDK, Vault, WeightedPool } from "solax-sdk/src";
 import { useMainAction, useSDKInit, useTokenInfo } from "contexts";
 import { Keypair } from "@solana/web3.js";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import useAutoFocus from "hooks/useAutoFocus";
 const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
   const { signTransaction } = useWallet();
   const { faucet } = useSDKInit();
+  const amoutInput = useAutoFocus();
   const [values, setValues] = useState({});
   // handle to save values of input
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -52,16 +54,30 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
                 <p>{pool.name}</p>
               </Row>
             </div>
-            <input
-              type="number"
-              name={pool.name}
-              min={0}
-              pattern={`${floatNumRegex}`}
-              placeholder="0.00"
-              step="any"
-              onChange={handleChange}
-              className={`w-full bg-transparent outline-none text-right text-[24px] font-bold`}
-            />
+            {index === 0 ? (
+              <input
+                type="number"
+                name={pool.name}
+                min={0}
+                pattern={`${floatNumRegex}`}
+                placeholder="0.00"
+                step="any"
+                ref={amoutInput}
+                onChange={handleChange}
+                className={`w-full bg-transparent outline-none text-right text-[24px] font-bold`}
+              />
+            ) : (
+              <input
+                type="number"
+                name={pool.name}
+                min={0}
+                pattern={`${floatNumRegex}`}
+                placeholder="0.00"
+                step="any"
+                onChange={handleChange}
+                className={`w-full bg-transparent outline-none text-right text-[24px] font-bold`}
+              />
+            )}
           </Row>
           <p className="text-[14px] text-gray-500 px-1">Balance: 0</p>
         </Col>

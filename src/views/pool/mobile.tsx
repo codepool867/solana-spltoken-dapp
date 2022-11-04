@@ -4,15 +4,16 @@ import { useRouter } from "next/router";
 import { BsDownload } from "react-icons/bs";
 
 import { Button, Col, Grid, Image, Row } from "components";
-import { usePoolDetail } from "contexts";
+import { useMainAction, usePoolDetail } from "contexts";
 import type { PairProps, SearchProps, GridStatusProps } from "utils";
 import usePools from "../../hooks/usePools";
 
 const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ searchValue, gridStatus }) => {
   const router = useRouter();
+  const { isActionLoading } = useMainAction();
   const { setPoolDetail } = usePoolDetail();
   const [pageNumber, setPageNumber] = useState(1);
-  const { pools, hasMore, loading } = usePools(pageNumber);
+  const { pools, hasMore } = usePools(pageNumber);
   const result = pools.filter((pool) => {
     if (pool) {
       if (!searchValue) return true;
@@ -31,7 +32,7 @@ const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ sea
   const observer = useRef<IntersectionObserver>();
   const lastPoolElementRef = useCallback(
     (node: any) => {
-      if (loading) return;
+      if (isActionLoading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
@@ -40,7 +41,7 @@ const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ sea
       });
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore]
+    [isActionLoading, hasMore]
   );
 
   const handleRoute = (pairs: PairProps[]) => {

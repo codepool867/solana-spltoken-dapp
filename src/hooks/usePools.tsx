@@ -1,12 +1,13 @@
 import axios from "axios";
+import { useMainAction } from "contexts";
 import React, { useEffect, useState } from "react";
 import type { PoolProps } from "utils";
 export default function usePools(pageNumber: number) {
-  const [loading, setLoading] = useState(false);
+  const { setIsActionLoading } = useMainAction();
   const [pools, setPools] = useState<PoolProps[]>([]);
   const [hasMore, setHasMore] = useState(true);
   useEffect(() => {
-    setLoading(true);
+    setIsActionLoading(true);
     axios({
       method: "GET",
       url: "/api/pools",
@@ -19,9 +20,9 @@ export default function usePools(pageNumber: number) {
         if (pageNumber === 1) return res.data;
         return [...prevPools, ...res.data];
       });
-      setLoading(false);
+      setIsActionLoading(false);
     });
   }, [pageNumber]);
 
-  return { loading, pools, hasMore };
+  return { pools, hasMore };
 }
