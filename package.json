@@ -9,9 +9,11 @@
     "lint": "next lint",
     "clear": "del-cli --force ./.next ./node_modules",
     "clear:next": "del-cli --force ./.next",
-    "clear:modules": "del-cli --force ./node_modules"
+    "clear:modules": "del-cli --force ./node_modules",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^13.0.2",
     "@project-serum/anchor": "^0.25.0",
     "@solana/spl-token": "^0.3.5",
     "@solana/wallet-adapter-base": "^0.9.18",
@@ -22,6 +24,7 @@
     "aos": "^2.3.4",
     "axios": "^1.1.3",
     "bn.js": "^5.2.1",
+    "cross-env": "^7.0.3",
     "firebase-admin": "^11.2.0",
     "next": "12.3.1",
     "nprogress": "^0.2.0",
