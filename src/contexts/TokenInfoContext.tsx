@@ -37,7 +37,7 @@ export const TokenInfoContext = createContext<TokenInfoProps>({
   setSlippageValue: (value: number) => {},
 });
 
-export const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
+const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const { publicKey } = useWallet();
   const { connection } = useConnection();
   const [selectedTokenType, setSelectedTokenType] = useState<SelectedTokenType>();
@@ -108,7 +108,7 @@ export const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
     </TokenInfoContext.Provider>
   );
 };
-
+export default TokenInfoProvider;
 export const useTokenInfo = () => {
   return useContext(TokenInfoContext);
 };

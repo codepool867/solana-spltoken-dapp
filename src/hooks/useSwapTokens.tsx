@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useMainAction } from "contexts";
+import { useMainAction } from "contexts/MainActionContext";
 import React, { useEffect, useState } from "react";
 import type { PairProps } from "utils";
 export default function useSwapTokens(pageNumber: number) {

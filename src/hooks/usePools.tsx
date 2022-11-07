@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useMainAction } from "contexts";
+import { useMainAction } from "contexts/MainActionContext";
 import React, { useEffect, useState } from "react";
 import type { PoolProps } from "utils";
 export default function usePools(pageNumber: number) {

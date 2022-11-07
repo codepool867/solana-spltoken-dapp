@@ -11,7 +11,6 @@ export interface MainActionContextProp {
   isActionLoading: boolean;
   setIsActionLoading: (value: boolean) => void;
 }
-
 export const MainActionContext = createContext<MainActionContextProp>({
   index: -1,
   setIndex: (value: number) => {},
@@ -23,7 +22,7 @@ export const MainActionContext = createContext<MainActionContextProp>({
   setIsActionLoading: (value: boolean) => {},
 });
 
-export const MainActionProvider: FC<PropsWithChildren> = ({ children }) => {
+const MainActionProvider: FC<PropsWithChildren> = ({ children }) => {
   const [index, setIndex] = useState(-1);
   const [showModal, setShowModal] = useState<boolean | string>(false);
   const [isTXLoading, setIsTXLoading] = useState<boolean>(false);
@@ -37,6 +36,7 @@ export const MainActionProvider: FC<PropsWithChildren> = ({ children }) => {
     </MainActionContext.Provider>
   );
 };
+export default MainActionProvider;
 
 export const useMainAction = () => {
   return useContext(MainActionContext);

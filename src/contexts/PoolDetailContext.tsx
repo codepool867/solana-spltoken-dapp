@@ -12,11 +12,12 @@ export const PoolDetailContext = createContext<PoolDetailContextProps>({
   setPoolDetail: () => {},
 });
 
-export const PoolDetailProvider: FC<PropsWithChildren> = ({ children }) => {
+const PoolDetailProvider: FC<PropsWithChildren> = ({ children }) => {
   const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
 
   return <PoolDetailContext.Provider value={{ poolDetail, setPoolDetail }}>{children}</PoolDetailContext.Provider>;
 };
+export default PoolDetailProvider;
 
 export const usePoolDetail = () => {
   return useContext(PoolDetailContext);

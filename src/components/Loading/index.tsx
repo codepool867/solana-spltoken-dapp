@@ -2,7 +2,7 @@ import React from "react";
 
 import { MoonLoader } from "react-spinners";
 
-import { useMainAction } from "contexts";
+import { useMainAction } from "contexts/MainActionContext";
 
 const Loading = () => {
   const { isActionLoading } = useMainAction();
