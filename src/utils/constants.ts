@@ -2,10 +2,10 @@ import { RiTwitterFill as Twitter, RiMediumFill as Medium, RiDiscordFill as Disc
 
 import type { SeoProps } from "./types";
 
-import SOL from "assets/images/sol.png";
-import SAX from "assets/images/sola-x.png";
-import USDC from "assets/images/usdc.png";
-import USDT from "assets/images/usdt.png";
+const SOL = "images/sol.png";
+const SAX = "images/sola-x.png";
+const USDC = "images/usdc.png";
+const USDT = "images/usdt.png";
 
 // const SOL
 // const USDT_ICON = "https://cdn.jsdelivr.net/gh/saber-hq/spl-token-icons@master/icons/101/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB.svg"

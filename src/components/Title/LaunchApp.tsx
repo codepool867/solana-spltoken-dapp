@@ -3,7 +3,7 @@ import React, { type FC } from "react";
 import { Image } from "components";
 import type { TemplateViewProps } from "utils";
 
-import Launch_SOLAX from "assets/images/launch_solax@4x.png";
+const Launch_SOLAX = "images/launch_solax@4x.png";
 
 // component for title part of swap & pools page
 const LaunchApp: FC<TemplateViewProps> = ({ title }) => {

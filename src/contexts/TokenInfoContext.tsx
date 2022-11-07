@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useEffect } from "react";
 import React, { createContext, useContext, useState } from "react";
 
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 
 import { formatBalance, handleErrors, token_list, parseKey, SelectedTokenType, type BalanceProps, type PairProps } from "utils";
 

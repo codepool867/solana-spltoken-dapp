@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Button, Image } from "components";
 import type { TemplateViewProps } from "utils";
 
-import SOLA_X_Logo from "assets/images/sola-x.png";
+const SOLA_X_Logo = "images/sola-x.png";
 
 // view for template like 404 and 500 error page and coming-soon page
 const Template: FC<TemplateViewProps> = ({ title }) => {

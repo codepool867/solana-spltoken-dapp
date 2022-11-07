@@ -9,7 +9,7 @@ import { Border, Col, Container, Image, Row } from "components";
 import { Social } from "views";
 import { formatWalletAddress, handleAdjustOverflow, menu_list, network } from "utils";
 
-import SOLAX_LOGO from "assets/images/solax_logo@4x.png";
+const SOLAX_LOGO = "images/solax_logo@4x.png";
 
 // default header of SOLA-X
 const Header = () => {
