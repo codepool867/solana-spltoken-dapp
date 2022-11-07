@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 import { Col, Container, Image, Page, Row } from "components";
-import { usePoolDetail } from "contexts";
+import { usePoolDetail } from "contexts/PoolDetailContext";
 import { PoolDeposit, PoolWithdraw } from "views";
 import { pool_list } from "utils";
 

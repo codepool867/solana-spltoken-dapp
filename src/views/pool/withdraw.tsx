@@ -3,7 +3,10 @@ import React, { type ChangeEvent, type FC, useState } from "react";
 import { Button, Col, Image, Row } from "components";
 import { floatNumRegex, type PoolDetailProps } from "utils";
 import { SDK, Vault, WeightedPool } from "solax-sdk/src";
-import { useMainAction, useSDKInit, useTokenInfo } from "contexts";
+import { useMainAction } from "contexts/MainActionContext";
+import { useSDKInit } from "contexts/SDKInitContext";
+import { useTokenInfo } from "contexts/TokenInfoContext";
+
 import { Keypair } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
 const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {

@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import { BsDownload } from "react-icons/bs";
 
 import { Button, Col, Grid, Image, Row } from "components";
-import { useMainAction, usePoolDetail } from "contexts";
+import { useMainAction } from "contexts/MainActionContext";
+import { usePoolDetail } from "contexts/PoolDetailContext";
 import type { PairProps, SearchProps, GridStatusProps } from "utils";
 import usePools from "../../hooks/usePools";
 

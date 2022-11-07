@@ -3,7 +3,8 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TfiClose } from "react-icons/tfi";
 
 import { Image, Modal, Col, Row } from "components";
-import { useMainAction, useTokenInfo } from "contexts";
+import { useMainAction } from "contexts/MainActionContext";
+import { useTokenInfo } from "contexts/TokenInfoContext";
 import { SelectedTokenType, type PairProps } from "utils";
 import axios from "axios";
 import useSwapTokens from "hooks/useSwapTokens";

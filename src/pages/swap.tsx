@@ -5,11 +5,12 @@ import { GoSettings, GoCheck } from "react-icons/go";
 import { TbArrowsUpDown } from "react-icons/tb";
 
 import { Button, Col, Container, LaunchApp, Page, Row } from "components";
-import { useMainAction, useTokenInfo } from "contexts";
+import { useMainAction } from "contexts/MainActionContext";
+import { useTokenInfo } from "contexts/TokenInfoContext";
 import { Exchange, TokenModal } from "views";
 import { slippage_list } from "utils";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useSDKInit } from "contexts";
+import { useSDKInit } from "contexts/SDKInitContext";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { SDK, Vault, WeightedPool } from "solax-sdk";
 // swap page
