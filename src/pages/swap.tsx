@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { GoSettings, GoCheck } from "react-icons/go";
@@ -15,7 +15,10 @@ import { Keypair, PublicKey } from "@solana/web3.js";
 import { SDK, Vault, WeightedPool } from "solax-sdk";
 // swap page
 const Swap = () => {
-  const { showModal } = useMainAction();
+  const { showModal, setIsActionLoading } = useMainAction();
+  useEffect(() => {
+    setIsActionLoading(false);
+  }, []);
   const { signTransaction, publicKey } = useWallet();
   // const { faucet } = useSDKInit();
   const { inputAmount, inputTokenData, outputTokenData, slippageValue, setSlippageValue } = useTokenInfo();
