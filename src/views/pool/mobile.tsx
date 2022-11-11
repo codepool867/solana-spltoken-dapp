@@ -2,20 +2,18 @@ import React, { useCallback, useEffect, useRef, useState, type FC, type PropsWit
 import { useRouter } from "next/router";
 
 import { BsDownload } from "react-icons/bs";
-
+import { observer } from "mobx-react-lite";
 import { Button, Col, Grid, Image, Row } from "components";
 import { useMainAction } from "contexts/MainActionContext";
 import { usePoolDetail } from "contexts/PoolDetailContext";
 import type { PairProps, SearchProps, GridStatusProps } from "utils";
-import usePools from "../../hooks/usePools";
+import poolStore from "../../store/poolStore";
 
 const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ searchValue, gridStatus }) => {
   const router = useRouter();
   const { isActionLoading } = useMainAction();
-  const { setPoolDetail } = usePoolDetail();
-  const [pageNumber, setPageNumber] = useState(1);
-  const { pools, hasMore } = usePools(pageNumber);
-  const result = pools.filter((pool) => {
+
+  const result = poolStore.pools.filter((pool) => {
     if (pool) {
       if (!searchValue) return true;
       return pool.pairs
@@ -36,17 +34,17 @@ const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ sea
       if (isActionLoading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        if (entries[0].isIntersecting && poolStore.hasMore) {
+          poolStore.resetPools();
         }
       });
       if (node) observer.current.observe(node);
     },
-    [isActionLoading, hasMore]
+    [isActionLoading, poolStore.hasMore]
   );
 
   const handleRoute = (pairs: PairProps[]) => {
-    setPoolDetail(pairs);
+    // setPoolDetail(pairs);
     const pairNames = pairs.map((pair) => {
       return pair.name;
     });
@@ -123,4 +121,4 @@ const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ sea
   );
 };
 
-export default PoolMobile;
+export default observer(PoolMobile);

@@ -5,9 +5,9 @@ import { TfiClose } from "react-icons/tfi";
 import { Image, Modal, Col, Row } from "components";
 import { useMainAction } from "contexts/MainActionContext";
 import { useTokenInfo } from "contexts/TokenInfoContext";
-import { SelectedTokenType, type PairProps } from "utils";
-import axios from "axios";
-import useSwapTokens from "hooks/useSwapTokens";
+import { prefer_token_list, SelectedTokenType, type PairProps } from "utils";
+import { observer } from "mobx-react-lite";
+import swapTokenStore from "store/swapTokenStore";
 
 const TokenModal = () => {
   const { setShowModal, isActionLoading } = useMainAction();
@@ -15,30 +15,21 @@ const TokenModal = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   //handle server side pagination infinite scroll
 
-  const [pageNumber, setPageNumber] = useState(1);
-  const [preferTokens, setPreferTokens] = useState<PairProps[]>([]);
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: "/api/preferToken",
-    }).then((res) => {
-      setPreferTokens(res.data);
-    });
-  }, []);
-  const { hasMore, tokens } = useSwapTokens(pageNumber);
+  const preferTokens = prefer_token_list;
+
   const observer = useRef<IntersectionObserver>();
   const lastTokenElementRef = useCallback(
     (node: any) => {
       if (isActionLoading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        if (entries[0].isIntersecting && swapTokenStore.hasMore) {
+          swapTokenStore.resetTokens();
         }
       });
       if (node) observer.current.observe(node);
     },
-    [isActionLoading, hasMore]
+    [isActionLoading, swapTokenStore.hasMore]
   );
   // handle choose token function
 
@@ -50,7 +41,7 @@ const TokenModal = () => {
     }
     setShowModal(false);
   };
-  const result = tokens.filter((token) => {
+  const result = swapTokenStore.swapTokens.filter((token) => {
     if (token) {
       if (!searchValue) return true;
       if (
@@ -103,7 +94,7 @@ const TokenModal = () => {
             >
               <div className="flex items-center space-x-4">
                 {token.icon && <Image src={token.icon} alt={token.alt} width={25} height={25} />}
-                {index === tokens.length - 1 ? (
+                {index === result.length - 1 ? (
                   <p ref={lastTokenElementRef} key={`${token.mint}_p_${index}`}>
                     {token.name}
                   </p>
@@ -120,4 +111,4 @@ const TokenModal = () => {
   );
 };
 
-export default TokenModal;
+export default observer(TokenModal);

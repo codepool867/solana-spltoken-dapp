@@ -26,7 +26,7 @@ const MainActionProvider: FC<PropsWithChildren> = ({ children }) => {
   const [index, setIndex] = useState(-1);
   const [showModal, setShowModal] = useState<boolean | string>(false);
   const [isTXLoading, setIsTXLoading] = useState<boolean>(false);
-  const [isActionLoading, setIsActionLoading] = useState<boolean>(true);
+  const [isActionLoading, setIsActionLoading] = useState<boolean>(false);
 
   return (
     <MainActionContext.Provider
