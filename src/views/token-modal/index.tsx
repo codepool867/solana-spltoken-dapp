@@ -28,7 +28,7 @@ const TokenModal = () => {
       });
       if (node) observer.current.observe(node);
     },
-    [isActionLoading, swapTokenStore.hasMore]
+    [isActionLoading]
   );
   // handle choose token function
 

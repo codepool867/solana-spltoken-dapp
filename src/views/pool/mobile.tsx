@@ -44,7 +44,7 @@ const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ sea
       });
       if (node) observer.current.observe(node);
     },
-    [isActionLoading, poolStore.hasMore]
+    [isActionLoading]
   );
 
   const handleRoute = (pairs: PairProps[]) => {
