@@ -3,8 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TfiClose } from "react-icons/tfi";
 
 import { Image, Modal, Col, Row } from "components";
-import { useMainAction } from "contexts/MainActionContext";
-import { useTokenInfo } from "contexts/TokenInfoContext";
+import { useMainAction, useTokenInfo } from "contexts";
 import { prefer_token_list, SelectedTokenType, type PairProps } from "utils";
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";

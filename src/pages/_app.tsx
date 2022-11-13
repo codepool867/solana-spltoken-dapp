@@ -5,14 +5,10 @@ import { useRouter } from "next/router";
 import AOS from "aos";
 import NProgress from "nprogress";
 import { ToastContainer } from "react-toastify";
-import dynamic from "next/dynamic";
-const Layout = dynamic(import("layouts"));
-const Loading = dynamic(import("components/Loading"));
-const MainActionProvider = dynamic(import("contexts/MainActionContext"));
-const PoolDetailProvider = dynamic(import("contexts/PoolDetailContext"));
-const SDKInitProvider = dynamic(import("contexts/SDKInitContext"));
-const TokenInfoProvider = dynamic(import("contexts/TokenInfoContext"));
-const WalletConnectProvider = dynamic(import("contexts/WalletConnectContext"));
+
+import Layout from "layouts";
+import { Loading } from "components";
+import { MainActionProvider, PoolDetailProvider, SDKInitProvider, TokenInfoProvider, WalletConnectProvider } from "contexts";
 
 import "aos/dist/aos.css";
 import "nprogress/nprogress.css";

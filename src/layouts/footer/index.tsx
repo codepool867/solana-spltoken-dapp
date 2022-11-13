@@ -4,7 +4,7 @@ import { Border, Col, Container, Image, Row } from "components";
 import { CopyRight, Social } from "views";
 import { contact_list, resource_list } from "utils";
 
-const SOLAX_LOGO = "images/solax_logo@4x.png";
+import SOLAX_LOGO from "assets/images/solax_logo@4x.png";
 
 // default footer of SOLA-X
 const Footer = () => {

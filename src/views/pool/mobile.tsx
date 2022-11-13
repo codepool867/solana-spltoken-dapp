@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import { BsDownload } from "react-icons/bs";
 import { observer } from "mobx-react-lite";
 import { Button, Col, Grid, Image, Row } from "components";
-import { useMainAction } from "contexts/MainActionContext";
-import { usePoolDetail } from "contexts/PoolDetailContext";
+import { useMainAction, usePoolDetail } from "contexts";
 import type { PairProps, SearchProps, GridStatusProps } from "utils";
 import poolStore from "../../store/poolStore";
 

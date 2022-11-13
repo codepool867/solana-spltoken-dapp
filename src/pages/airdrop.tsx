@@ -5,9 +5,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 import { Button, Col, Container, Image, Notification, Page, Row } from "components";
-import { useMainAction } from "contexts/MainActionContext";
-import { useSDKInit } from "contexts/SDKInitContext";
-import { useTokenInfo } from "contexts/TokenInfoContext";
+import { useMainAction, useSDKInit, useTokenInfo } from "contexts";
 import { airdrop_list, generateTransactionLink, handleErrors, network } from "utils";
 
 // airdrop page for only devnet

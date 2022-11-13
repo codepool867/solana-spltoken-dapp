@@ -1,7 +1,7 @@
 import type { FC, PropsWithChildren } from "react";
 import React from "react";
 
-import { useMainAction } from "contexts/MainActionContext";
+import { useMainAction } from "contexts";
 import type { ExtraTWClassProps } from "utils";
 
 // general modal component

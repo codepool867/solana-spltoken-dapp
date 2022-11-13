@@ -3,8 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { TbChevronDown } from "react-icons/tb";
 
 import { Border, Image, Row } from "components";
-import { useMainAction } from "contexts/MainActionContext";
-import { useTokenInfo } from "contexts/TokenInfoContext";
+import { useMainAction, useTokenInfo } from "contexts";
 import { floatNumRegex, SelectedTokenType, type ExchangeProps, type PairProps } from "utils";
 
 // if direction is 0, input token. direction is 1, output token

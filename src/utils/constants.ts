@@ -2,10 +2,10 @@ import { RiTwitterFill as Twitter, RiMediumFill as Medium, RiDiscordFill as Disc
 
 import type { SeoProps } from "./types";
 
-const SOL = "images/sol.png";
-const SAX = "images/sola-x.png";
-const USDC = "images/usdc.png";
-const USDT = "images/usdt.png";
+import SOL from "assets/images/sol.png";
+import SAX from "assets/images/sola-x.png";
+import USDC from "assets/images/usdc.png";
+import USDT from "assets/images/usdt.png";
 
 // const SOL
 // const USDT_ICON = "https://cdn.jsdelivr.net/gh/saber-hq/spl-token-icons@master/icons/101/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB.svg"
@@ -109,6 +109,14 @@ export const social_list = [
 
 // token_list for swap
 export const token_list = [
+  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+  { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
+  { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
+  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+  { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
+  { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
   { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
   { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },

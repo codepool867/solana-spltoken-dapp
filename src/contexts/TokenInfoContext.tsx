@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useEffect } from "react";
 import React, { createContext, useContext, useState } from "react";
 
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 import { formatBalance, handleErrors, token_list, parseKey, SelectedTokenType, type BalanceProps, type PairProps } from "utils";
 
@@ -37,7 +37,7 @@ export const TokenInfoContext = createContext<TokenInfoProps>({
   setSlippageValue: (value: number) => {},
 });
 
-const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
+export const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const { publicKey } = useWallet();
   const { connection } = useConnection();
   const [selectedTokenType, setSelectedTokenType] = useState<SelectedTokenType>();
@@ -108,7 +108,7 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
     </TokenInfoContext.Provider>
   );
 };
-export default TokenInfoProvider;
+
 export const useTokenInfo = () => {
   return useContext(TokenInfoContext);
 };

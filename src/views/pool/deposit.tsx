@@ -4,9 +4,7 @@ import { Button, Col, Image, Row } from "components";
 import { floatNumRegex, type PoolDetailProps } from "utils";
 
 import { SDK, Vault, WeightedPool } from "solax-sdk/src";
-import { useMainAction } from "contexts/MainActionContext";
-import { useTokenInfo } from "contexts/TokenInfoContext";
-import { useSDKInit } from "contexts/SDKInitContext";
+import { useMainAction, useSDKInit, useTokenInfo } from "contexts";
 import { Keypair } from "@solana/web3.js";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import useAutoFocus from "hooks/useAutoFocus";
@@ -15,6 +13,8 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
   const { faucet } = useSDKInit();
   const amoutInput = useAutoFocus();
   const [values, setValues] = useState({});
+  const { balance, getBalance } = useTokenInfo();
+  console.log("=====", balance);
   // handle to save values of input
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -81,7 +81,7 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
               />
             )}
           </Row>
-          <p className="text-[14px] text-gray-500 px-1">Balance: 0</p>
+          <p className="text-[14px] text-gray-500 px-1">Balance: {balance[pool.name]}</p>
         </Col>
       ))}
       <Button action={handleDeposit} className="mt-4">

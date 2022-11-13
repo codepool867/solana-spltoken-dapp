@@ -11,7 +11,7 @@ export interface SDKInitContextProps {
 
 export const SDKInitContext = createContext<SDKInitContextProps>({});
 
-const SDKInitProvider: FC<PropsWithChildren> = ({ children }) => {
+export const SDKInitProvider: FC<PropsWithChildren> = ({ children }) => {
   const wallet = useAnchorWallet();
   const { connection } = useConnection();
   const [faucet, setFaucet] = useState<Faucet>();
@@ -33,4 +33,3 @@ const SDKInitProvider: FC<PropsWithChildren> = ({ children }) => {
 export const useSDKInit = () => {
   return useContext(SDKInitContext);
 };
-export default SDKInitProvider;
