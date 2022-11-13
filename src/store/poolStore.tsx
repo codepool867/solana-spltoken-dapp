@@ -15,7 +15,7 @@ class PoolStore {
     this.getPoolsFromApi(1);
   }
   resetPools = () => {
-    this.poolPageNumber = this.poolPageNumber + 1;
+    // this.poolPageNumber = this.poolPageNumber + 1;
     this.getPoolsFromApi(this.poolPageNumber);
   };
   getPoolsFromApi = async (pageNumber: number) => {
