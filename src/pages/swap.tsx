@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { GoSettings, GoCheck } from "react-icons/go";
 import { TbArrowsUpDown } from "react-icons/tb";
-
+import swapTokenStore from "store/swapTokenStore";
 import { Button, Col, Container, LaunchApp, Page, Row } from "components";
 import { useMainAction, useTokenInfo } from "contexts";
 import { Exchange, TokenModal } from "views";
@@ -14,8 +14,13 @@ import { Keypair, PublicKey } from "@solana/web3.js";
 import { SDK, Vault, WeightedPool } from "solax-sdk";
 // swap page
 const Swap = () => {
+  useEffect(() => {
+    if (swapTokenStore.pageNumber === 1) {
+      swapTokenStore.getTokensFromApi(1);
+    }
+  }, []);
   const { showModal } = useMainAction();
-  const { signTransaction, publicKey } = useWallet();
+  // const { signTransaction, publicKey } = useWallet();
   // const { faucet } = useSDKInit();
   const { inputAmount, inputTokenData, outputTokenData, slippageValue, setSlippageValue } = useTokenInfo();
   const [hasOrder, setHasOrder] = useState(true);
