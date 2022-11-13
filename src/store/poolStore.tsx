@@ -7,7 +7,7 @@ import type { PoolProps } from "utils";
 
 class PoolStore {
   pools: PoolProps[] = [];
-  poolPageNumber: number = 1;
+  pageNumber: number = 1;
   hasMore: boolean = true;
 
   constructor() {
@@ -15,8 +15,8 @@ class PoolStore {
     // this.getPoolsFromApi(1);
   }
   resetPools = () => {
-    this.poolPageNumber = this.poolPageNumber + 1;
-    this.getPoolsFromApi(this.poolPageNumber);
+    this.pageNumber = this.pageNumber + 1;
+    this.getPoolsFromApi(this.pageNumber);
   };
   getPoolsFromApi = async (pageNumber: number) => {
     try {
@@ -28,7 +28,11 @@ class PoolStore {
       if (res.data.length === 0) {
         this.hasMore = false;
       } else {
-        this.pools = [...this.pools, ...res.data];
+        if (pageNumber === 1) {
+          this.pools = res.data;
+        } else {
+          this.pools = [...this.pools, ...res.data];
+        }
       }
     } catch (error) {
       console.error(`error ${error}`);

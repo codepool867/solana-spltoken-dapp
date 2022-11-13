@@ -9,6 +9,11 @@ import type { PairProps, SearchProps, GridStatusProps } from "utils";
 import poolStore from "../../store/poolStore";
 
 const PoolMobile: FC<PropsWithChildren & SearchProps & GridStatusProps> = ({ searchValue, gridStatus }) => {
+  useEffect(() => {
+    if (poolStore.pageNumber == 1) {
+      poolStore.getPoolsFromApi(1);
+    }
+  }, []);
   const router = useRouter();
   const { isActionLoading } = useMainAction();
 

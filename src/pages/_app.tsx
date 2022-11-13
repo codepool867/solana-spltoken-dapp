@@ -14,10 +14,11 @@ import "aos/dist/aos.css";
 import "nprogress/nprogress.css";
 import "react-toastify/dist/ReactToastify.css";
 import "assets/styles/globals.css";
+import { useScrollRestoration } from "hooks/useScrollRestoration";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
-
+  useScrollRestoration(router);
   NProgress.configure({ showSpinner: true });
 
   useEffect(() => {

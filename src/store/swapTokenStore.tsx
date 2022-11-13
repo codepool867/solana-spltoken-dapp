@@ -28,7 +28,11 @@ class SwapTokenStore {
       if (res.data.length === 0) {
         this.hasMore = false;
       } else {
-        this.swapTokens = [...this.swapTokens, ...res.data];
+        if (pageNumber === 1) {
+          this.swapTokens = res.data;
+        } else {
+          this.swapTokens = [...this.swapTokens, ...res.data];
+        }
       }
     } catch (error) {
       console.error(`error ${error}`);
