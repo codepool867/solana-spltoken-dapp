@@ -1,6 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { token_list } from "utils";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.send(token_list);
 };
+export default handler;
