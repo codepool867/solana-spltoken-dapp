@@ -9,6 +9,7 @@ class SwapTokenStore {
   swapTokens: PairProps[] = [];
   pageNumber: number = 1;
   hasMore: boolean = true;
+  isLoading: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -19,6 +20,7 @@ class SwapTokenStore {
     this.getTokensFromApi(this.pageNumber);
   };
   getTokensFromApi = async (pageNumber: number) => {
+    this.isLoading = true;
     try {
       const res = await axios({
         method: "GET",
@@ -37,6 +39,7 @@ class SwapTokenStore {
     } catch (error) {
       console.error(`error ${error}`);
     }
+    this.isLoading = false;
   };
 }
 

@@ -9,16 +9,18 @@ class PoolStore {
   pools: PoolProps[] = [];
   pageNumber: number = 1;
   hasMore: boolean = true;
-
+  isLoading: boolean = false;
   constructor() {
     makeAutoObservable(this);
     // this.getPoolsFromApi(1);
   }
   resetPools = () => {
     this.pageNumber = this.pageNumber + 1;
+
     this.getPoolsFromApi(this.pageNumber);
   };
   getPoolsFromApi = async (pageNumber: number) => {
+    this.isLoading = true;
     try {
       const res = await axios({
         method: "GET",
@@ -37,6 +39,7 @@ class PoolStore {
     } catch (error) {
       console.error(`error ${error}`);
     }
+    this.isLoading = false;
   };
 }
 

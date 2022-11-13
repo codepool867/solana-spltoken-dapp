@@ -15,8 +15,8 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
     }
   }, []);
   const router = useRouter();
-  const { isActionLoading } = useMainAction();
-
+  const { setIsActionLoading, isActionLoading } = useMainAction();
+  setIsActionLoading(poolStore.isLoading);
   const result = poolStore.pools.filter((pool) => {
     if (pool) {
       if (!searchValue) return true;
