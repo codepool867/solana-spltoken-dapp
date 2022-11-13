@@ -136,3 +136,7 @@ export interface PoolProps {
   fees_30d: number;
   apr_30d: number;
 }
+export interface PoolMobileProps {
+  searchValue: string;
+  gridStatus: boolean;
+}
