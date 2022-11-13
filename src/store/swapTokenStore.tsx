@@ -1,5 +1,6 @@
 import axios from "axios";
 import { configure, makeAutoObservable } from "mobx";
+import mainActionStore from "./mainActionStore";
 import type { PairProps } from "utils";
 // configure({
 //   enforceActions: "never",
@@ -9,8 +10,13 @@ class SwapTokenStore {
   swapTokens: PairProps[] = [];
   pageNumber: number = 1;
   hasMore: boolean = true;
-  isLoading: boolean = false;
 
+  setSwapTokens = (swapTokens: PairProps[]) => {
+    this.swapTokens = swapTokens;
+  };
+  setHasMore = (hasMore: boolean) => {
+    this.hasMore = hasMore;
+  };
   constructor() {
     makeAutoObservable(this);
     // this.getTokensFromApi(1);
@@ -20,7 +26,7 @@ class SwapTokenStore {
     this.getTokensFromApi(this.pageNumber);
   };
   getTokensFromApi = async (pageNumber: number) => {
-    this.isLoading = true;
+    mainActionStore.setIsActionLoading(true);
     try {
       const res = await axios({
         method: "GET",
@@ -31,15 +37,15 @@ class SwapTokenStore {
         this.hasMore = false;
       } else {
         if (pageNumber === 1) {
-          this.swapTokens = res.data;
+          this.setSwapTokens(res.data);
         } else {
-          this.swapTokens = [...this.swapTokens, ...res.data];
+          this.setSwapTokens([...this.swapTokens, ...res.data]);
         }
       }
     } catch (error) {
       console.error(`error ${error}`);
     }
-    this.isLoading = false;
+    mainActionStore.setIsActionLoading(false);
   };
 }
 

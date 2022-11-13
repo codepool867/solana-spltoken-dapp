@@ -4,19 +4,18 @@ import { useRouter } from "next/router";
 import { BsDownload } from "react-icons/bs";
 import { observer } from "mobx-react-lite";
 import { Button, Col, Grid, Image, Row } from "components";
-import { useMainAction, usePoolDetail } from "contexts";
 import type { PoolMobileProps, PairProps } from "utils";
 import poolStore from "../../store/poolStore";
+import mainActionStore from "store/mainActionStore";
 
 const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
   useEffect(() => {
-    if (poolStore.pageNumber == 1) {
+    if (poolStore.pageNumber === 1) {
       poolStore.getPoolsFromApi(1);
     }
   }, []);
   const router = useRouter();
-  const { setIsActionLoading, isActionLoading } = useMainAction();
-  setIsActionLoading(poolStore.isLoading);
+
   const result = poolStore.pools.filter((pool) => {
     if (pool) {
       if (!searchValue) return true;
@@ -33,19 +32,17 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
     }
   });
   const observer = useRef<IntersectionObserver>();
-  const lastPoolElementRef = useCallback(
-    (node: any) => {
-      if (isActionLoading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && poolStore.hasMore) {
-          poolStore.resetPools();
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [isActionLoading]
-  );
+  const lastPoolElementRef = useCallback((node: any) => {
+    // console.log(poolStore.pageNumber, poolStore.pools.length);
+    if (mainActionStore.isActionLoading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && poolStore.hasMore) {
+        poolStore.resetPools();
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, []);
 
   const handleRoute = (pairs: PairProps[]) => {
     // setPoolDetail(pairs);

@@ -1,15 +1,21 @@
 import axios from "axios";
-import { configure, makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
+import mainActionStore from "./mainActionStore";
 import type { PoolProps } from "utils";
-// configure({
-//   enforceActions: "never",
-// });
 
 class PoolStore {
   pools: PoolProps[] = [];
   pageNumber: number = 1;
   hasMore: boolean = true;
-  isLoading: boolean = false;
+  setIsLoading = (isLoading: boolean) => {
+    mainActionStore.setIsActionLoading(isLoading);
+  };
+  setPools = (pools: PoolProps[]) => {
+    this.pools = pools;
+  };
+  setHasMore = (hasMore: boolean) => {
+    this.hasMore = hasMore;
+  };
   constructor() {
     makeAutoObservable(this);
     // this.getPoolsFromApi(1);
@@ -20,7 +26,7 @@ class PoolStore {
     this.getPoolsFromApi(this.pageNumber);
   };
   getPoolsFromApi = async (pageNumber: number) => {
-    this.isLoading = true;
+    this.setIsLoading(true);
     try {
       const res = await axios({
         method: "GET",
@@ -28,18 +34,18 @@ class PoolStore {
         params: { page: pageNumber },
       });
       if (res.data.length === 0) {
-        this.hasMore = false;
+        this.setHasMore(false);
       } else {
         if (pageNumber === 1) {
-          this.pools = res.data;
+          this.setPools(res.data);
         } else {
-          this.pools = [...this.pools, ...res.data];
+          this.setPools([...this.pools, ...res.data]);
         }
       }
     } catch (error) {
       console.error(`error ${error}`);
     }
-    this.isLoading = false;
+    this.setIsLoading(false);
   };
 }
 

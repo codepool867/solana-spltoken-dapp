@@ -8,29 +8,26 @@ import { prefer_token_list, SelectedTokenType, type PairProps } from "utils";
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
 import poolStore from "store/poolStore";
-
+import mainActionStore from "store/mainActionStore";
 const TokenModal = () => {
-  const { setShowModal, isActionLoading, setIsActionLoading } = useMainAction();
+  const { setShowModal } = useMainAction();
   const { selectedTokenType, setInputTokenData, setOutputTokenData, balance } = useTokenInfo();
   const [searchValue, setSearchValue] = useState<string>("");
   //handle server side pagination infinite scroll
-  setIsActionLoading(poolStore.isLoading);
+
   const preferTokens = prefer_token_list;
 
   const observer = useRef<IntersectionObserver>();
-  const lastTokenElementRef = useCallback(
-    (node: any) => {
-      if (isActionLoading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && swapTokenStore.hasMore) {
-          swapTokenStore.resetTokens();
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [isActionLoading]
-  );
+  const lastTokenElementRef = useCallback((node: any) => {
+    if (mainActionStore.isActionLoading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && swapTokenStore.hasMore) {
+        swapTokenStore.resetTokens();
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, []);
   // handle choose token function
 
   const handleChooseToken = (token: PairProps) => {
