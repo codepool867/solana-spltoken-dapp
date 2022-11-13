@@ -7,7 +7,6 @@ import { useMainAction, useTokenInfo } from "contexts";
 import { prefer_token_list, SelectedTokenType, type PairProps } from "utils";
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
-import poolStore from "store/poolStore";
 import mainActionStore from "store/mainActionStore";
 const TokenModal = () => {
   const { setShowModal } = useMainAction();

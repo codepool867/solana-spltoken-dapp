@@ -4,7 +4,7 @@ import { Button, Col, Image, Row } from "components";
 import { floatNumRegex, type PoolDetailProps } from "utils";
 
 import { SDK, Vault, WeightedPool } from "solax-sdk/src";
-import { useMainAction, useSDKInit, useTokenInfo } from "contexts";
+import { useSDKInit, useTokenInfo } from "contexts";
 import { Keypair } from "@solana/web3.js";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import useAutoFocus from "hooks/useAutoFocus";
