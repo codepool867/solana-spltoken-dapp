@@ -5,7 +5,7 @@ import { BsDownload } from "react-icons/bs";
 import { observer } from "mobx-react-lite";
 import { Button, Col, Grid, Image, Row } from "components";
 import { useMainAction, usePoolDetail } from "contexts";
-import type { pool, PoolMobileProps } from "utils";
+import type { PoolMobileProps } from "utils";
 import poolStore from "../../store/poolStore";
 
 const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
