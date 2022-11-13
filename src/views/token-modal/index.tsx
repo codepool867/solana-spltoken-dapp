@@ -7,13 +7,14 @@ import { useMainAction, useTokenInfo } from "contexts";
 import { prefer_token_list, SelectedTokenType, type PairProps } from "utils";
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
+import poolStore from "store/poolStore";
 
 const TokenModal = () => {
-  const { setShowModal, isActionLoading } = useMainAction();
+  const { setShowModal, isActionLoading, setIsActionLoading } = useMainAction();
   const { selectedTokenType, setInputTokenData, setOutputTokenData, balance } = useTokenInfo();
   const [searchValue, setSearchValue] = useState<string>("");
   //handle server side pagination infinite scroll
-
+  setIsActionLoading(poolStore.isLoading);
   const preferTokens = prefer_token_list;
 
   const observer = useRef<IntersectionObserver>();
