@@ -3,13 +3,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TfiClose } from "react-icons/tfi";
 
 import { Image, Modal, Col, Row } from "components";
-import { useMainAction, useTokenInfo } from "contexts";
+import { useTokenInfo } from "contexts";
 import { prefer_token_list, SelectedTokenType, type PairProps } from "utils";
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
 import mainActionStore from "store/mainActionStore";
 const TokenModal = () => {
-  const { setShowModal } = useMainAction();
   const { selectedTokenType, setInputTokenData, setOutputTokenData, balance } = useTokenInfo();
   const [searchValue, setSearchValue] = useState<string>("");
   //handle server side pagination infinite scroll
@@ -35,7 +34,7 @@ const TokenModal = () => {
     } else {
       setOutputTokenData(token);
     }
-    setShowModal(false);
+    mainActionStore.setShowModal(false);
   };
   const result = swapTokenStore.swapTokens.filter((token) => {
     if (token) {
@@ -54,7 +53,7 @@ const TokenModal = () => {
       <Col className="relative space-y-4 h-[80vh]">
         <Row className="justify-between items-center">
           <p className="text-white text-[20px] font-bold">Select a token</p>
-          <TfiClose size={18} onClick={() => setShowModal(false)} className="cursor-pointer hover:scale-105" />
+          <TfiClose size={18} onClick={() => mainActionStore.setShowModal(false)} className="cursor-pointer hover:scale-105" />
         </Row>
         {/* search input */}
         <input

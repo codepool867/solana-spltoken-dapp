@@ -1,16 +1,14 @@
 import type { FC, PropsWithChildren } from "react";
 import React from "react";
 
-import { useMainAction } from "contexts";
+import mainActionStore from "store/mainActionStore";
 import type { ExtraTWClassProps } from "utils";
 
 // general modal component
 const Modal: FC<PropsWithChildren & ExtraTWClassProps> = ({ children, className }) => {
-  const { setShowModal } = useMainAction();
-
   return (
     <div className="fixed inset-0 w-full h-screen z-[9998] overflow-hidden bg-white bg-opacity-20 backdrop-blur-[4px]">
-      <div onClick={() => setShowModal(false)} className="relative top-24 tablet:top-16 flex justify-center max-h-[900px]">
+      <div onClick={() => mainActionStore.setShowModal(false)} className="relative top-24 tablet:top-16 flex justify-center max-h-[900px]">
         <div
           onClick={(e) => {
             e.stopPropagation();

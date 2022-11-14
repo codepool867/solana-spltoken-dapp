@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { GoSettings, GoCheck } from "react-icons/go";
 import { TbArrowsUpDown } from "react-icons/tb";
+import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
 import { Button, Col, Container, LaunchApp, Page, Row } from "components";
-import { useMainAction, useTokenInfo } from "contexts";
+import { useTokenInfo } from "contexts";
+import mainActionStore from "store/mainActionStore";
 import { Exchange, TokenModal } from "views";
 import { slippage_list } from "utils";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -19,7 +21,6 @@ const Swap = () => {
       swapTokenStore.getTokensFromApi(1);
     }
   }, []);
-  const { showModal } = useMainAction();
   // const { signTransaction, publicKey } = useWallet();
   // const { faucet } = useSDKInit();
   const { inputAmount, inputTokenData, outputTokenData, slippageValue, setSlippageValue } = useTokenInfo();
@@ -67,7 +68,7 @@ const Swap = () => {
 
   return (
     <Page name="swap">
-      {showModal === "token_modal" && <TokenModal />}
+      {mainActionStore.showModal === "token_modal" && <TokenModal />}
       <Container>
         <Col className="relative w-full items-center justify-center">
           <LaunchApp title="swap" />
@@ -129,4 +130,4 @@ const Swap = () => {
   );
 };
 
-export default Swap;
+export default observer(Swap);

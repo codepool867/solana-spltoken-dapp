@@ -3,12 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { TbChevronDown } from "react-icons/tb";
 
 import { Border, Image, Row } from "components";
-import { useMainAction, useTokenInfo } from "contexts";
+import { useTokenInfo } from "contexts";
 import { floatNumRegex, SelectedTokenType, type ExchangeProps, type PairProps } from "utils";
-
+import mainActionStore from "store/mainActionStore";
 // if direction is 0, input token. direction is 1, output token
 const Exchange = ({ direction, order }: ExchangeProps) => {
-  const { setShowModal } = useMainAction();
   const { setSelectedTokenType, inputTokenData, outputTokenData, setInputAmount, balance } = useTokenInfo();
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLInputElement>(null);
@@ -28,7 +27,7 @@ const Exchange = ({ direction, order }: ExchangeProps) => {
     } else {
       setSelectedTokenType(SelectedTokenType.Output);
     }
-    setShowModal("token_modal");
+    mainActionStore.setShowModal("token_modal");
   };
 
   const handleMaxValue = (tokenData: PairProps | undefined) => {

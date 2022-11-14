@@ -5,15 +5,15 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 import { Button, Col, Container, Image, Notification, Page, Row } from "components";
-import { useMainAction, useSDKInit, useTokenInfo } from "contexts";
+import { useSDKInit, useTokenInfo } from "contexts";
 import { airdrop_list, generateTransactionLink, handleErrors, network } from "utils";
-
+import mainActionStore from "store/mainActionStore";
+import { observer } from "mobx-react-lite";
 // airdrop page for only devnet
 const Airdrop = () => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const { faucet } = useSDKInit();
-  const { index, setIndex, setIsTXLoading, isActionLoading, setIsActionLoading } = useMainAction();
   const { balance, getBalance } = useTokenInfo();
 
   // handle claim/airdrop SOL, SAX, USDC/USDT function
@@ -23,15 +23,15 @@ const Airdrop = () => {
     const address = new PublicKey(mint);
 
     if (publicKey && faucet) {
-      setIndex(id);
-      setIsActionLoading(true);
+      mainActionStore.setIndex(id);
+      mainActionStore.setIsActionLoading(true);
       try {
         const {
           context: { slot: minContextSlot },
           value: { blockhash, lastValidBlockHeight },
         } = await connection.getLatestBlockhashAndContext();
         Notification({ title: "Airdropping...", message: "Preparing Transaction" });
-        setIsTXLoading(true);
+        mainActionStore.setIsTXLoading(true);
         if (name === "SOL") {
           // airdrop SOL
           signature = await connection.requestAirdrop(publicKey, LAMPORTS_PER_SOL);
@@ -44,7 +44,7 @@ const Airdrop = () => {
           const transaction = await faucet.airdrop({ mint: address, amount });
           signature = await sendTransaction(transaction, connection, { minContextSlot });
         }
-        setIsTXLoading(false);
+        mainActionStore.setIsTXLoading(false);
         // confirm airdrop/claim transaction
         await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
         const link = generateTransactionLink(signature, network);
@@ -53,8 +53,8 @@ const Airdrop = () => {
         handleErrors(error);
       } finally {
         getBalance();
-        setIsTXLoading(false);
-        setIsActionLoading(false);
+        mainActionStore.setIsTXLoading(false);
+        mainActionStore.setIsActionLoading(false);
       }
     } else {
       Notification({ type: "warn", title: "Connection Required", message: "Please connect your wallet to SOLA-X" });
@@ -85,8 +85,8 @@ const Airdrop = () => {
                       </Row>
                     </div>
 
-                    <Button isLoading={isActionLoading} action={() => handleClaim(airdrop.name, airdrop.mint, id)}>
-                      {isActionLoading && index === id ? <ClipLoader size={25} color="white" /> : "Claim"}
+                    <Button isLoading={mainActionStore.isActionLoading} action={() => handleClaim(airdrop.name, airdrop.mint, id)}>
+                      {mainActionStore.isActionLoading && mainActionStore.index === id ? <ClipLoader size={25} color="white" /> : "Claim"}
                     </Button>
                   </Row>
                   <p className="text-[14px] text-gray-500 px-1">Balance: {balance[airdrop.name]}</p>
@@ -100,4 +100,4 @@ const Airdrop = () => {
   );
 };
 
-export default Airdrop;
+export default observer(Airdrop);

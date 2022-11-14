@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 
 import Layout from "layouts";
 import { Loading } from "components";
-import { MainActionProvider, PoolDetailProvider, SDKInitProvider, TokenInfoProvider, WalletConnectProvider } from "contexts";
+import { PoolDetailProvider, SDKInitProvider, TokenInfoProvider, WalletConnectProvider } from "contexts";
 
 import "aos/dist/aos.css";
 import "nprogress/nprogress.css";
@@ -43,21 +43,19 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   const handleRouteFinish = () => NProgress.done();
 
   return (
-    <MainActionProvider>
-      <WalletConnectProvider>
-        <SDKInitProvider>
-          <TokenInfoProvider>
-            <PoolDetailProvider>
-              <Loading />
-              <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </PoolDetailProvider>
-          </TokenInfoProvider>
-        </SDKInitProvider>
-      </WalletConnectProvider>
-    </MainActionProvider>
+    <WalletConnectProvider>
+      <SDKInitProvider>
+        <TokenInfoProvider>
+          <PoolDetailProvider>
+            <Loading />
+            <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </PoolDetailProvider>
+        </TokenInfoProvider>
+      </SDKInitProvider>
+    </WalletConnectProvider>
   );
 };
 
