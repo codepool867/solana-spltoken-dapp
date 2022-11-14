@@ -82,7 +82,7 @@ input[type="number"] {
   position: relative;
   width: 77.1429px;
   height: 77.1429px;
-  animation: 0.6s linear 0s infinite normal forwards running react-spinners-MoonLoader-moon;
+  animation: 0.6s linear 0s infinite normal forwards running solax-spinner-rotation;
 }
 .moonloader-in {
   width: 8.57143px;
@@ -102,4 +102,9 @@ input[type="number"] {
   opacity: 0.1;
   box-sizing: content-box;
   position: absolute;
+}
+@keyframes solax-spinner-rotation {
+  100% {
+    transform: rotate(360deg);
+  }
 }
