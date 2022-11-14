@@ -46,13 +46,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <WalletConnectProvider>
       <SDKInitProvider>
         <TokenInfoProvider>
-          <PoolDetailProvider>
-            <Loading />
-            <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </PoolDetailProvider>
+          <Loading />
+          <ToastContainer pauseOnHover={false} pauseOnFocusLoss={false} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </TokenInfoProvider>
       </SDKInitProvider>
     </WalletConnectProvider>

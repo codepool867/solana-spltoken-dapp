@@ -4,15 +4,14 @@ import { useRouter } from "next/router";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 import { Col, Container, Image, Page, Row } from "components";
-import { usePoolDetail } from "contexts";
 import { PoolDeposit, PoolWithdraw } from "views";
-import { pool_list } from "utils";
+import { PairProps, pool_list } from "utils";
 
 // pool details page
 const Liquidity = () => {
+  const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
   const router = useRouter();
   const { type } = router.query;
-  const { poolDetail, setPoolDetail } = usePoolDetail();
   const [ctaType, setCtaType] = useState("deposit");
 
   const pairNames = pool_list.map((pool) => {
@@ -27,7 +26,7 @@ const Liquidity = () => {
         setPoolDetail(pool_list[index].pairs);
       }
     });
-  }, [pairNames]);
+  }, [pairNames, type]);
 
   return (
     <Page name="pools">
