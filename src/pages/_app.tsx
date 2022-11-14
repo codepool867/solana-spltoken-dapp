@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 
 import Layout from "layouts";
 import { Loading } from "components";
-import { PoolDetailProvider, SDKInitProvider, TokenInfoProvider, WalletConnectProvider } from "contexts";
+import { SDKInitProvider, TokenInfoProvider, WalletConnectProvider } from "contexts";
 
 import "aos/dist/aos.css";
 import "nprogress/nprogress.css";
