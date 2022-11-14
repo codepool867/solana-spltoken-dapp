@@ -1,6 +1,6 @@
 import { makeAutoObservable, values } from "mobx";
 class MainActionStore {
-  isActionLoading: boolean = false;
+  isActionLoading: boolean = true;
   setIsActionLoading = async (isActionLoading: boolean) => {
     this.isActionLoading = isActionLoading;
   };
