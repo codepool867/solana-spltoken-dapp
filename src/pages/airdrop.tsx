@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ClipLoader } from "react-spinners";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -16,6 +16,9 @@ const Airdrop = () => {
   const { faucet } = useSDKInit();
   const { balance, getBalance } = useTokenInfo();
 
+  useEffect(() => {
+    mainActionStore.setIsActionLoading(false);
+  }, []);
   // handle claim/airdrop SOL, SAX, USDC/USDT function
   const handleClaim = async (name: string, mint: string, id: number) => {
     let signature = "";
