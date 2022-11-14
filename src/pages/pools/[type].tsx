@@ -6,9 +6,13 @@ import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { Col, Container, Image, Page, Row } from "components";
 import { PoolDeposit, PoolWithdraw } from "views";
 import { PairProps, pool_list } from "utils";
+import mainActionStore from "store/mainActionStore";
 
 // pool details page
 const Liquidity = () => {
+  useEffect(() => {
+    mainActionStore.setIsActionLoading(false);
+  }, []);
   const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
   const router = useRouter();
   const { type } = router.query;
