@@ -36,7 +36,6 @@ const Swap = () => {
   };
   const handleInputSlippageValue = (slipVal: string) => {
     let result = Number(slipVal);
-    if (result > 1) result = 1;
     setSlippageValue(result);
   };
   // handle swap function
