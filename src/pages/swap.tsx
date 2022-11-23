@@ -69,9 +69,17 @@ const Swap = () => {
         const provider = faucet.provider;
         const sdk = new SDK(provider);
         const vaultPublicKey = new PublicKey("F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy");
-        const poolPublicKey = new PublicKey("7nknfk12wDGydRqarcoY86nrWRcM2RAggwys1rpprDdB");
+        let poolPublicKey = new PublicKey("7nknfk12wDGydRqarcoY86nrWRcM2RAggwys1rpprDdB");
+        const swapNamePair = inputTokenData.name + outputTokenData.name;
+        // if(swapNamePair==='SAXUSDC' || swapNamePair==='USDCSAX'){
+
+        // }
+        if (swapNamePair === "SAXUSDT" || swapNamePair === "USDTSAX") {
+          poolPublicKey = new PublicKey("49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY");
+        }
         const vault = await Vault.load(sdk, vaultPublicKey);
         const pool = await WeightedPool.load(sdk, poolPublicKey);
+
         if (pool) {
           Notification({ title: "Swapping...", message: "Preparing Transaction" });
           mainActionStore.setIsTXLoading(true);

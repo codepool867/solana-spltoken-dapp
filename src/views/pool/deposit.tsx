@@ -47,7 +47,6 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
           value: { blockhash, lastValidBlockHeight },
         } = await connection.getLatestBlockhashAndContext();
         const provider = faucet.provider;
-        console.log(provider, "444444444444");
         const sdk = new SDK(provider);
         const vaultPublicKey = new PublicKey("F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy");
         const poolPublicKey = new PublicKey(pool_public_key);
