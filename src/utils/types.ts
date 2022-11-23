@@ -136,6 +136,7 @@ export interface PoolProps {
   volume_30d: number;
   fees_30d: number;
   apr_30d: number;
+  name: string;
 }
 export interface PoolMobileProps {
   searchValue: string;

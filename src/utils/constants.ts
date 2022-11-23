@@ -109,18 +109,18 @@ export const social_list = [
 
 // token_list for swap
 export const token_list = [
-  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  // { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
   { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
   { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
-  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
-  { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
-  { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
-  { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
-  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
-  { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
-  { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
-  { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
+  // { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  // { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+  // { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
+  // { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
+  // { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  // { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+  // { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
+  // { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
 ];
 
 export const prefer_token_list = [
@@ -142,6 +142,7 @@ export const pool_list = [
     fees_30d: 30,
     apr_30d: 80,
     pool_public_key: "7nknfk12wDGydRqarcoY86nrWRcM2RAggwys1rpprDdB",
+    name: "SAX-USDC",
   },
   {
     pairs: [
@@ -153,6 +154,7 @@ export const pool_list = [
     fees_30d: 30,
     apr_30d: 80,
     pool_public_key: "49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY",
+    name: "SAX-USDT",
   },
 ];
 

@@ -1,38 +1,75 @@
 import React, { type ChangeEvent, type FC, useState } from "react";
 
-import { Button, Col, Image, Row } from "components";
-import { floatNumRegex, type PoolDetailProps } from "utils";
+import { Button, Col, Image, Notification, Row } from "components";
+import { floatNumRegex, generateTransactionLink, handleErrors, network, type PoolDetailProps } from "utils";
 import { SDK, Vault, WeightedPool } from "solax-sdk/src";
 import { useSDKInit, useTokenInfo } from "contexts";
-import { Keypair } from "@solana/web3.js";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { Keypair, PublicKey } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import mainActionStore from "store/mainActionStore";
 const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
   const [percentageAmount, setPercentageAmount] = useState(100);
-  const [values, setValues] = useState({});
-  const { signTransaction } = useWallet();
+  // const [values, setValues] = useState({});
+  const { sendTransaction, publicKey } = useWallet();
   const { faucet } = useSDKInit();
-
+  const { connection } = useConnection();
+  const [values, setValues] = useState<number[]>([]);
   // handle to save values of input
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: (Number(value) * percentageAmount) / 100 });
+    setValues([...values, (Number(value) * percentageAmount) / 100]);
   };
 
   // handle deposit function
   const handleWithdraw = async () => {
-    // if (faucet) {
-    //   const provider = faucet.provider;
-    //   const sdk = new SDK(provider);
-    //   const vaultKP = Keypair.generate(); //todo:
-    //   const poolKP = Keypair.generate(); //todo:
-    //   const vault = new Vault(sdk, vaultKP.publicKey);
-    //   const pool = new WeightedPool(sdk, poolKP.publicKey); //const pool = await WeightedPool.load(sdk, poolKP.publicKey);
-    //   const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
-    //     vault,
-    //     amount: 3000,
-    //   });
-    // }
-    // console.log(values, "values");
+    let signature = "";
+    if (publicKey && faucet) {
+      if (percentageAmount) {
+        Notification({ type: "warning", title: "warning", message: "Token input amount is invalid" });
+        return;
+      }
+      // if() {
+      // }
+      mainActionStore.setIsActionLoading(true);
+      try {
+        const {
+          context: { slot: minContextSlot },
+          value: { blockhash, lastValidBlockHeight },
+        } = await connection.getLatestBlockhashAndContext();
+        const provider = faucet.provider;
+        const sdk = new SDK(provider);
+        const vaultPublicKey = new PublicKey("F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy");
+        const poolPublicKey = new PublicKey(pool_public_key);
+        const vault = await Vault.load(sdk, vaultPublicKey);
+        const pool = await WeightedPool.load(sdk, poolPublicKey);
+        if (pool) {
+          Notification({ title: "Withdrawing...", message: "Preparing Transaction" });
+          mainActionStore.setIsTXLoading(true);
+
+          const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
+            vault,
+            amount: percentageAmount,
+          });
+
+          signature = await sendTransaction(tx, connection, { minContextSlot });
+          mainActionStore.setIsTXLoading(false);
+          await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
+          const link = generateTransactionLink(signature, network);
+          Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
+          setValues([]);
+        } else {
+        }
+
+        // confirm airdrop/claim transaction
+      } catch (error) {
+        handleErrors(error);
+      } finally {
+        mainActionStore.setIsTXLoading(false);
+        mainActionStore.setIsActionLoading(false);
+      }
+    } else {
+      Notification({ type: "warn", title: "Connection Required", message: "Please connect your wallet to SOLA-X" });
+    }
   };
 
   return (

@@ -74,7 +74,7 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
                   </Row>
                 </Row>
                 <Col className="w-2/5">
-                  <p className="font-medium">{`${pool.pairs[0].name}-${pool.pairs.length}Pool`}</p>
+                  <p className="font-medium">{pool.name}</p>
                   <Row className="flex-wrap whitespace-nowrap font-medium text-[14px] text-gray-400">
                     {pool.pairs.map((pair, index) => (
                       <p key={`pair_name_${index}`}>
