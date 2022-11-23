@@ -70,7 +70,7 @@ export const seo_list: { [any: string]: SeoProps } = {
 
 // airdrop_list
 export const airdrop_list = [
-  { name: "SOL", symbol: "SOL", icon: SOL, alt: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  // { name: "SOL", symbol: "SOL", icon: SOL, alt: "SOL", mint: "So11111111111111111111111111111111111111112" },
   { name: "SAX", symbol: "SAX", icon: SAX, alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", symbol: "USDC", icon: USDC, alt: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
   { name: "USDT", symbol: "USDT", icon: USDT, alt: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
