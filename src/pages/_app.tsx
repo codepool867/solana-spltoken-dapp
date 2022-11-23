@@ -8,7 +8,8 @@ import { ToastContainer } from "react-toastify";
 
 import Layout from "layouts";
 import { Loading } from "components";
-import { SDKInitProvider, TokenInfoProvider, WalletConnectProvider } from "contexts";
+import { SDKInitProvider, WalletConnectProvider } from "contexts";
+import TokenInfoProvider from "contexts/TokenInfoContext";
 
 import "aos/dist/aos.css";
 import "nprogress/nprogress.css";

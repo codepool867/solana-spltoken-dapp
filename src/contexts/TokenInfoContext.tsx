@@ -5,7 +5,8 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 import { formatBalance, handleErrors, token_list, parseKey, SelectedTokenType, type BalanceProps, type PairProps } from "utils";
-
+import swapTokenStore from "store/swapTokenStore";
+import { observer } from "mobx-react-lite";
 export interface TokenInfoProps {
   selectedTokenType?: SelectedTokenType;
   setSelectedTokenType: (value?: SelectedTokenType) => void;
@@ -37,7 +38,7 @@ export const TokenInfoContext = createContext<TokenInfoProps>({
   setSlippageValue: (value: number) => {},
 });
 
-export const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
+const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const { publicKey } = useWallet();
   const { connection } = useConnection();
   const [selectedTokenType, setSelectedTokenType] = useState<SelectedTokenType>();
@@ -58,7 +59,7 @@ export const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   // handle to get SOL/SPL token balance of connected wallet
   const getBalance = async () => {
     try {
-      token_list.map(async (token) => {
+      swapTokenStore.swapTokens.map(async (token) => {
         const address = parseKey(token.mint);
         if (token.name === "SOL") {
           const amount = await connection.getBalance(publicKey as PublicKey);
@@ -108,6 +109,7 @@ export const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
     </TokenInfoContext.Provider>
   );
 };
+export default observer(TokenInfoProvider);
 
 export const useTokenInfo = () => {
   return useContext(TokenInfoContext);

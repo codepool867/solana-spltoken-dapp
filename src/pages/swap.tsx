@@ -5,12 +5,12 @@ import { GoSettings, GoCheck } from "react-icons/go";
 import { TbArrowsUpDown } from "react-icons/tb";
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
-import { Button, Col, Container, LaunchApp, Page, Row } from "components";
+import { Button, Col, Container, LaunchApp, Notification, Page, Row } from "components";
 import { useTokenInfo } from "contexts";
 import mainActionStore from "store/mainActionStore";
 import { Exchange, TokenModal } from "views";
-import { slippage_list } from "utils";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { generateTransactionLink, handleErrors, network, slippage_list } from "utils";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useSDKInit } from "contexts";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { SDK, Vault, WeightedPool } from "solax-sdk";
@@ -21,9 +21,10 @@ const Swap = () => {
       swapTokenStore.getTokensFromApi(1);
     }
   }, []);
-  // const { signTransaction, publicKey } = useWallet();
-  // const { faucet } = useSDKInit();
-  const { inputAmount, inputTokenData, outputTokenData, slippageValue, setSlippageValue } = useTokenInfo();
+  const { publicKey, sendTransaction } = useWallet();
+  const { faucet } = useSDKInit();
+  const { connection } = useConnection();
+  const { inputAmount, inputTokenData, outputTokenData, slippageValue, setSlippageValue, balance } = useTokenInfo();
   const [hasOrder, setHasOrder] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -38,33 +39,69 @@ const Swap = () => {
     let result = Number(slipVal);
     setSlippageValue(result);
   };
-  // handle swap function
-  const handleSwap = async () => {
-    // if (faucet && inputTokenData && inputAmount && outputTokenData) {
-    //   const provider = faucet.provider;
-    //   const sdk = new SDK(provider);
-    //   const vaultKP = Keypair.generate(); //todo:
-    //   const poolKP = Keypair.generate(); //todo:
-    //   const vault = new Vault(sdk, vaultKP.publicKey);
-    //   const pool = new WeightedPool(sdk, poolKP.publicKey); //const pool = await WeightedPool.load(sdk, poolKP.publicKey);
-    //   const { result: outAmount, tx } = await pool.swapAndResult({
-    //     vault,
-    //     fromMintK: new PublicKey(inputTokenData.mint),
-    //     toMintK: new PublicKey(outputTokenData.mint),
-    //     amount: inputAmount,
-    //     userKP: vaultKP,
-    //   });
-    //   console.log("Out Amount:", outAmount);
-    //   if (signTransaction) {
-    //     const signed = await signTransaction(tx); // tx.sign([walletKP]);
-    //     const signature = await provider.connection.sendRawTransaction(signed.serialize());
-    //     await pool.confirmTX(signature);
-    //   }
-    // }
-    // console.log(inputAmount, "inputAmount");
-    // console.log(inputTokenData, "inputTokenData");
-  };
 
+  const handleSwap = async () => {
+    let signature = "";
+
+    if (publicKey && faucet) {
+      if (inputAmount === undefined) {
+        Notification({ type: "warning", title: "Warning", message: "Please input token amount" });
+        return;
+      }
+      if (inputTokenData === undefined) {
+        Notification({ type: "warning", title: "Warning", message: "Please choose token type" });
+        return;
+      }
+      if (inputAmount > balance[inputTokenData.name] || inputAmount == 0) {
+        Notification({ type: "warning", title: "Warning", message: "Input token amount is invalid" });
+        return;
+      }
+      if (outputTokenData === undefined) {
+        Notification({ type: "warning", title: "Warning", message: "Please choose token type" });
+        return;
+      }
+      mainActionStore.setIsActionLoading(true);
+      try {
+        const {
+          context: { slot: minContextSlot },
+          value: { blockhash, lastValidBlockHeight },
+        } = await connection.getLatestBlockhashAndContext();
+        const provider = faucet.provider;
+        const sdk = new SDK(provider);
+        const vaultPublicKey = new PublicKey("F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy");
+        const poolPublicKey = new PublicKey("7nknfk12wDGydRqarcoY86nrWRcM2RAggwys1rpprDdB");
+        const vault = await Vault.load(sdk, vaultPublicKey);
+        const pool = await WeightedPool.load(sdk, poolPublicKey);
+        if (pool) {
+          Notification({ title: "Swapping...", message: "Preparing Transaction" });
+          mainActionStore.setIsTXLoading(true);
+
+          const { result: outAmount, tx } = await pool.swapAndResult({
+            vault,
+            fromMintK: new PublicKey(inputTokenData.mint),
+            toMintK: new PublicKey(outputTokenData.mint),
+            amount: inputAmount,
+          });
+
+          signature = await sendTransaction(tx, connection, { minContextSlot });
+          mainActionStore.setIsTXLoading(false);
+          await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
+          const link = generateTransactionLink(signature, network);
+          Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
+        } else {
+        }
+
+        // confirm airdrop/claim transaction
+      } catch (error) {
+        handleErrors(error);
+      } finally {
+        mainActionStore.setIsTXLoading(false);
+        mainActionStore.setIsActionLoading(false);
+      }
+    } else {
+      Notification({ type: "warn", title: "Connection Required", message: "Please connect your wallet to SOLA-X" });
+    }
+  };
   return (
     <Page name="swap">
       {mainActionStore.showModal === "token_modal" && <TokenModal />}

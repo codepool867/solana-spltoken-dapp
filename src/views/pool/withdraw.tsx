@@ -6,7 +6,7 @@ import { SDK, Vault, WeightedPool } from "solax-sdk/src";
 import { useSDKInit, useTokenInfo } from "contexts";
 import { Keypair } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
-const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
+const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
   const [percentageAmount, setPercentageAmount] = useState(100);
   const [values, setValues] = useState({});
   const { signTransaction } = useWallet();

@@ -14,6 +14,8 @@ const Liquidity = () => {
     mainActionStore.setIsActionLoading(false);
   }, []);
   const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
+  const [detailPublicKey, setDetailPublickey] = useState<string>("");
+
   const router = useRouter();
   const { type } = router.query;
   const [ctaType, setCtaType] = useState("deposit");
@@ -28,6 +30,7 @@ const Liquidity = () => {
     pairNames.map((pair_name, index) => {
       if (type === pair_name.toString().replaceAll(",", "-")) {
         setPoolDetail(pool_list[index].pairs);
+        setDetailPublickey(pool_list[index].pool_public_key);
       }
     });
   }, [pairNames, type]);
@@ -67,7 +70,11 @@ const Liquidity = () => {
                 </div>
               </Row>
               <div className="pt-4">
-                {ctaType === "deposit" ? <PoolDeposit poolDetail={poolDetail} /> : <PoolWithdraw poolDetail={poolDetail} />}
+                {ctaType === "deposit" ? (
+                  <PoolDeposit poolDetail={poolDetail} pool_public_key={detailPublicKey} />
+                ) : (
+                  <PoolWithdraw poolDetail={poolDetail} pool_public_key={detailPublicKey} />
+                )}
               </div>
             </div>
           </Col>

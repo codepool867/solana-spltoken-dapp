@@ -83,6 +83,7 @@ export interface PairProps {
 // types for pair array of pool detail
 export interface PoolDetailProps {
   poolDetail: PairProps[];
+  pool_public_key: string;
 }
 
 // types for page seo

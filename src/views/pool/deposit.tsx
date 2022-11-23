@@ -1,48 +1,87 @@
 import React, { type ChangeEvent, type FC, useState } from "react";
 
-import { Button, Col, Image, Row } from "components";
-import { floatNumRegex, type PoolDetailProps } from "utils";
+import { Button, Col, Image, Notification, Row } from "components";
+import { floatNumRegex, generateTransactionLink, handleErrors, network, type PoolDetailProps } from "utils";
 
 import { SDK, Vault, WeightedPool } from "solax-sdk/src";
 import { useSDKInit, useTokenInfo } from "contexts";
-import { Keypair } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import useAutoFocus from "hooks/useAutoFocus";
-const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
-  const { signTransaction } = useWallet();
+import mainActionStore from "store/mainActionStore";
+const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
+  const { publicKey, sendTransaction } = useWallet();
+  const { connection } = useConnection();
   const { faucet } = useSDKInit();
   const amoutInput = useAutoFocus();
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState<number[]>([]);
   const { balance, getBalance } = useTokenInfo();
-  console.log("=====", balance);
-  // handle to save values of input
-  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+
+  const handleChange = (index: number, amount: number) => {
+    console.log(index, amount);
+    setValues((prevState) => {
+      let newValues = [...prevState];
+      newValues[index] = amount;
+      return newValues;
+    });
+    console.log(values);
   };
 
-  // handle deposit function
   const handleDeposit = async () => {
-    // if (faucet) {
-    //   const provider = faucet.provider;
-    //   const sdk = new SDK(provider);
-    //   const vaultKP = Keypair.generate(); //todo:
-    //   const poolKP = Keypair.generate(); //todo:
-    //   const vault = new Vault(sdk, vaultKP.publicKey);
-    //   const pool = new WeightedPool(sdk, poolKP.publicKey); //const pool = await WeightedPool.load(sdk, poolKP.publicKey);
-    //   const { result: outAmount, tx } = await pool.addLiquidityAndResult({
-    //     vault,
-    //     amounts: [3000, 6000, 1000],
-    //     userKP: vaultKP,
-    //   });
-    //   console.log("Out Amount:", outAmount);
-    //   if (signTransaction) {
-    //     const signed = await signTransaction(tx); // tx.sign([walletKP]);
-    //     const signature = await provider.connection.sendRawTransaction(signed.serialize());
-    //     await pool.confirmTX(signature);
-    //   }
-    // console.log(values, "values");
-    // }
+    let signature = "";
+    if (publicKey && faucet) {
+      let hasAmount = false;
+      values.map((value) => {
+        if (value > 0) hasAmount = true;
+      });
+      if (!hasAmount) {
+        Notification({ type: "warning", title: "warning", message: "Token input amount is invalid" });
+        return;
+      }
+      // if() {
+      // }
+      mainActionStore.setIsActionLoading(true);
+      try {
+        const {
+          context: { slot: minContextSlot },
+          value: { blockhash, lastValidBlockHeight },
+        } = await connection.getLatestBlockhashAndContext();
+        const provider = faucet.provider;
+        console.log(provider, "444444444444");
+        const sdk = new SDK(provider);
+        const vaultPublicKey = new PublicKey("F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy");
+        const poolPublicKey = new PublicKey(pool_public_key);
+        const vault = await Vault.load(sdk, vaultPublicKey);
+        const pool = await WeightedPool.load(sdk, poolPublicKey);
+        if (pool) {
+          Notification({ title: "Depositing...", message: "Preparing Transaction" });
+          mainActionStore.setIsTXLoading(true);
+
+          const { result: outAmount, tx } = await pool.addLiquidityAndResult({
+            vault,
+            amounts: values,
+            // userKP: vaultKP,
+          });
+
+          signature = await sendTransaction(tx, connection, { minContextSlot });
+          mainActionStore.setIsTXLoading(false);
+          await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
+          const link = generateTransactionLink(signature, network);
+          Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
+          setValues([]);
+        } else {
+        }
+
+        // confirm airdrop/claim transaction
+      } catch (error) {
+        handleErrors(error);
+      } finally {
+        mainActionStore.setIsTXLoading(false);
+        mainActionStore.setIsActionLoading(false);
+      }
+    } else {
+      Notification({ type: "warn", title: "Connection Required", message: "Please connect your wallet to SOLA-X" });
+    }
   };
 
   return (
@@ -65,7 +104,7 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
                 placeholder="0.00"
                 step="any"
                 ref={amoutInput}
-                onChange={handleChange}
+                onChange={(e) => handleChange(index, Number(e.target.value))}
                 className={`w-full bg-transparent outline-none text-right text-[24px] font-bold`}
               />
             ) : (
@@ -76,7 +115,7 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
                 pattern={`${floatNumRegex}`}
                 placeholder="0.00"
                 step="any"
-                onChange={handleChange}
+                onChange={(e) => handleChange(index, Number(e.target.value))}
                 className={`w-full bg-transparent outline-none text-right text-[24px] font-bold`}
               />
             )}

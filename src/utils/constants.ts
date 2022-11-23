@@ -134,51 +134,25 @@ export const prefer_token_list = [
 export const pool_list = [
   {
     pairs: [
-      { name: "aUSDC", symbol: aUSDC, icon: USDC, alt: "USDC", mint: "" },
-      { name: "mSDC", symbol: "mSDC", icon: USDC, alt: "USDC", mint: "" },
-      { name: "bUSDC", symbol: "bUSDC", icon: USDC, alt: "USDC", mint: "" },
-      { name: "daoUSDC", symbol: "daoUSDC", icon: USDC, alt: "USDC", mint: "" },
+      { name: "SAX", icon: SAX, symbol: "SAX", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+      { name: "USDC", icon: USDC, symbol: "USDC", alt: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
     ],
     liquidity: 200000,
     volume_30d: 300000,
     fees_30d: 30,
     apr_30d: 80,
+    pool_public_key: "7nknfk12wDGydRqarcoY86nrWRcM2RAggwys1rpprDdB",
   },
   {
     pairs: [
-      { name: "aUSDT", symbol: "aUSDT", icon: USDC, alt: "USDT", mint: "" },
-      { name: "bUSDT", symbol: "bUSDT", icon: USDC, alt: "USDT", mint: "" },
+      { name: "SAX", icon: SAX, symbol: "SAX", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+      { name: "USDT", icon: USDT, alt: "USDT", symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
     ],
     liquidity: 200000,
-    volume_30d: 3000000,
+    volume_30d: 300000,
     fees_30d: 30,
     apr_30d: 80,
-  },
-  {
-    pairs: [
-      { name: "SOL", symbol: "SOL", icon: SOL, alt: "USDC", mint: "" },
-      { name: "SAX", symbol: "SAX", icon: SAX, alt: "USDC", mint: "" },
-      { name: "SAX", symbol: "SAX", icon: SAX, alt: "USDC", mint: "" },
-    ],
-    liquidity: 20,
-    volume_30d: 30,
-    fees_30d: 30,
-    apr_30d: 80,
-  },
-  {
-    pairs: [
-      { name: "gSOL", symbol: "gSOL", icon: gSOL, alt: "SOL", mint: "" },
-      { name: "SAX", symbol: "SAX", icon: SAX, alt: "SOL", mint: "" },
-      { name: "WSOL", symbol: "WSOL", icon: WSOL, alt: "SOL", mint: "" },
-      { name: "GM", symbol: "GM", icon: GM, alt: "SOL", mint: "" },
-      { name: "mSOL", symbol: "mSOL", icon: mSOL, alt: "SOL", mint: "" },
-      { name: "daoSOL", symbol: "daoSOL", icon: daoSOL, alt: "SOL", mint: "" },
-      { name: "oSOL", symbol: "oSOL", icon: USDC, alt: "SOL", mint: "" },
-    ],
-    liquidity: 20,
-    volume_30d: 30,
-    fees_30d: 30,
-    apr_30d: 80,
+    pool_public_key: "49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY",
   },
 ];
 
