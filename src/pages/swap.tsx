@@ -39,6 +39,9 @@ const Swap = () => {
     let result = Number(slipVal);
     setSlippageValue(result);
   };
+  const handleHasOrder = () => {
+    setHasOrder(!hasOrder);
+  };
 
   const handleSwap = async () => {
     let signature = "";
@@ -121,7 +124,7 @@ const Swap = () => {
             <Col className="bg-copy_right bg-opacity-80 rounded-[20px] p-[30px] normal:px-[15px] normal:py-[20px] justify-between h-full space-y-[12px]">
               <Exchange direction={0} order={hasOrder} />
               <div className="p-2">
-                <TbArrowsUpDown size={30} className="max-w-fit w-full m-auto cursor-pointer" onClick={() => setHasOrder(!hasOrder)} />
+                <TbArrowsUpDown size={30} className="max-w-fit w-full m-auto cursor-pointer" onClick={() => handleHasOrder()} />
               </div>
               <Exchange direction={1} order={!hasOrder} />
               <Row className="justify-between font-medium text-[16px]">

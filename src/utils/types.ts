@@ -137,6 +137,7 @@ export interface PoolProps {
   fees_30d: number;
   apr_30d: number;
   name: string;
+  address: string;
 }
 export interface PoolMobileProps {
   searchValue: string;

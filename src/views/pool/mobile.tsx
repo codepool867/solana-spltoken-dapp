@@ -44,13 +44,11 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
     if (node) observer.current.observe(node);
   }, []);
 
-  const handleRoute = (pairs: PairProps[]) => {
-    // setPoolDetail(pairs);
-    const pairNames = pairs.map((pair) => {
-      return pair.name;
-    });
-    const dynamicRoute = pairNames.toString().replaceAll(",", "-");
-    router.push(`pools/${dynamicRoute}`);
+  const handleRoute = (poolAddress: string) => {
+    poolStore.setDetailPoolIndex(poolAddress);
+    console.log("sssssss", poolStore.detailPoolIndex);
+    router.push(`pools/${poolAddress}`);
+    console.log(poolAddress, "==============");
   };
   let gridStyle = "z-50 w-full  grid-cols-1 max-w-[560px] laptop:max-w-[560px] gap-6";
   if (gridStatus && result.length > 1) {
@@ -104,7 +102,7 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
                   )}
                 </Col>
               </Row>
-              <Button action={() => handleRoute(pool.pairs)} className="mt-4 w-full">
+              <Button action={() => handleRoute(pool.address)} className="mt-4 w-full">
                 <Row className="items-center justify-center space-x-2">
                   <BsDownload size={20} />
                   <p>Deposit</p>

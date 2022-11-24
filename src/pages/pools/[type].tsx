@@ -5,35 +5,37 @@ import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 import { Col, Container, Image, Page, Row } from "components";
 import { PoolDeposit, PoolWithdraw } from "views";
-import { PairProps, pool_list } from "utils";
+import { PairProps } from "utils";
+import poolStore from "store/poolStore";
 import mainActionStore from "store/mainActionStore";
 
 // pool details page
 const Liquidity = () => {
+  const [poolName, setPoolName] = useState<string>("");
   useEffect(() => {
     mainActionStore.setIsActionLoading(false);
+    setPoolDetail(poolStore.pools[poolStore.detailPoolIndex].pairs);
+    setPoolName(poolStore.pools[poolStore.detailPoolIndex].name);
   }, []);
   const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
   const [detailPublicKey, setDetailPublickey] = useState<string>("");
-
   const router = useRouter();
-  const { type } = router.query;
+  // const { type } = router.query;
   const [ctaType, setCtaType] = useState("deposit");
+  // const pairNames = pool_list.map((pool) => {
+  //   return pool.pairs.map((pair) => {
+  //     return pair.name;
+  //   });
+  // });
 
-  const pairNames = pool_list.map((pool) => {
-    return pool.pairs.map((pair) => {
-      return pair.name;
-    });
-  });
-
-  useEffect(() => {
-    pairNames.map((pair_name, index) => {
-      if (type === pair_name.toString().replaceAll(",", "-")) {
-        setPoolDetail(pool_list[index].pairs);
-        setDetailPublickey(pool_list[index].pool_public_key);
-      }
-    });
-  }, [pairNames, type]);
+  // useEffect(() => {
+  //   pairNames.map((pair_name, index) => {
+  //     if (type === pair_name.toString().replaceAll(",", "-")) {
+  //       setPoolDetail(pool_list[index].pairs);
+  //       setDetailPublickey(pool_list[index].pool_public_key);
+  //     }
+  //   });
+  // }, [pairNames, type]);
 
   return (
     <Page name="pools">
@@ -45,7 +47,7 @@ const Liquidity = () => {
               <p className="uppercase text-[24px]">Back</p>
             </Row>
             <Col className="space-y-1">
-              <p className="text-[36px] tablet:text-[24px] font-bold">{type} Pool</p>
+              <p className="text-[36px] tablet:text-[24px] font-bold">{poolName} Pool</p>
               <Row className="-space-x-2">
                 {poolDetail.map((pair, index) => (
                   <Image key={`pair_logo_${index}`} className="rounded-full" src={pair.icon} alt={pair.alt} width={40} height={40} />

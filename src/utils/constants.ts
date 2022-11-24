@@ -142,6 +142,7 @@ export const pool_list = [
     fees_30d: 30,
     apr_30d: 80,
     pool_public_key: "G6SLFJopxHCmkEq2E6GGm6EQ6jsM6u1nmtMGdf9M6Ke",
+    address: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX",
     name: "SAX80-USDC20",
   },
   {
@@ -154,6 +155,7 @@ export const pool_list = [
     fees_30d: 30,
     apr_30d: 80,
     pool_public_key: "78zodeD2ZkiuKy5YWjY3m3B9w2zcLJHicbkwN7iEJYqH",
+    address: "78zodeD2ZkiuKy5YWjY3m3B9w2zcLJHicbkwN7iEJYqH",
     name: "SAX80-USDT20",
   },
 ];

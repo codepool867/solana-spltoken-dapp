@@ -7,6 +7,7 @@ class PoolStore {
   pools: PoolProps[] = [];
   pageNumber: number = 1;
   hasMore: boolean = true;
+  detailPoolIndex: number = 0;
   setIsLoading = (isLoading: boolean) => {
     mainActionStore.setIsActionLoading(isLoading);
   };
@@ -24,6 +25,14 @@ class PoolStore {
     this.pageNumber = this.pageNumber + 1;
 
     this.getPoolsFromApi(this.pageNumber);
+  };
+  setDetailPoolIndex = (address: string) => {
+    this.pools.map((pool, index) => {
+      if (address === pool.address) {
+        this.detailPoolIndex = index;
+        return;
+      }
+    });
   };
   getPoolsFromApi = async (pageNumber: number) => {
     this.setIsLoading(true);
