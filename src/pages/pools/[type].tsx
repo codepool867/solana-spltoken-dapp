@@ -8,7 +8,7 @@ import { PoolDeposit, PoolWithdraw } from "views";
 import { PairProps } from "utils";
 import poolStore from "store/poolStore";
 import mainActionStore from "store/mainActionStore";
-
+import { observer } from "mobx-react-lite";
 // pool details page
 const Liquidity = () => {
   const [poolName, setPoolName] = useState<string>("");
@@ -16,10 +16,12 @@ const Liquidity = () => {
     mainActionStore.setIsActionLoading(false);
     setPoolDetail(poolStore.pools[poolStore.detailPoolIndex].pairs);
     setPoolName(poolStore.pools[poolStore.detailPoolIndex].name);
+    setDetailPublickey(poolStore.pools[poolStore.detailPoolIndex].public_key);
   }, []);
   const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
   const [detailPublicKey, setDetailPublickey] = useState<string>("");
   const router = useRouter();
+  const { query } = router;
   // const { type } = router.query;
   const [ctaType, setCtaType] = useState("deposit");
   // const pairNames = pool_list.map((pool) => {
@@ -32,8 +34,7 @@ const Liquidity = () => {
   //   pairNames.map((pair_name, index) => {
   //     if (type === pair_name.toString().replaceAll(",", "-")) {
   //       setPoolDetail(pool_list[index].pairs);
-  //       setDetailPublickey(pool_list[index].pool_public_key);
-  //     }
+  //
   //   });
   // }, [pairNames, type]);
 
@@ -44,7 +45,7 @@ const Liquidity = () => {
           <Col className="max-w-[560px] w-full mx-auto space-y-8">
             <Row action={() => router.back()} className="relative animate-border w-fit items-center space-x-2 cursor-pointer">
               <IoChevronBackCircleOutline fontSize={35} />
-              <p className="uppercase text-[24px]">Back</p>
+              <p className="uppercase text-[24px]">Back </p>
             </Row>
             <Col className="space-y-1">
               <p className="text-[36px] tablet:text-[24px] font-bold">{poolName} Pool</p>
@@ -86,4 +87,4 @@ const Liquidity = () => {
   );
 };
 
-export default Liquidity;
+export default observer(Liquidity);
