@@ -12,32 +12,19 @@ import { observer } from "mobx-react-lite";
 // pool details page
 const Liquidity = () => {
   const [poolName, setPoolName] = useState<string>("");
+  const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
+  const [detailPublicKey, setDetailPublickey] = useState<string>("");
+  const router = useRouter();
   useEffect(() => {
+    const { type } = router.query;
+    poolStore.setDetailPoolIndex(type as string);
     mainActionStore.setIsActionLoading(false);
     setPoolDetail(poolStore.pools[poolStore.detailPoolIndex].pairs);
     setPoolName(poolStore.pools[poolStore.detailPoolIndex].name);
     setDetailPublickey(poolStore.pools[poolStore.detailPoolIndex].public_key);
   }, []);
-  const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
-  const [detailPublicKey, setDetailPublickey] = useState<string>("");
-  const router = useRouter();
-  const { query } = router;
-  // const { type } = router.query;
+
   const [ctaType, setCtaType] = useState("deposit");
-  // const pairNames = pool_list.map((pool) => {
-  //   return pool.pairs.map((pair) => {
-  //     return pair.name;
-  //   });
-  // });
-
-  // useEffect(() => {
-  //   pairNames.map((pair_name, index) => {
-  //     if (type === pair_name.toString().replaceAll(",", "-")) {
-  //       setPoolDetail(pool_list[index].pairs);
-  //
-  //   });
-  // }, [pairNames, type]);
-
   return (
     <Page name="pools">
       <Container className="py-10">
