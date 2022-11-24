@@ -159,6 +159,32 @@ export const pool_list = [
     address: "78zodeD2ZkiuKy5YWjY3m3B9w2zcLJHicbkwN7iEJYqH",
     name: "SAX80-USDT20",
   },
+  {
+    pairs: [
+      { name: "SAX", icon: SAX, symbol: "SAX", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+      { name: "USDC", icon: USDC, symbol: "USDC", alt: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
+    ],
+    liquidity: 200000,
+    volume_30d: 300000,
+    fees_30d: 30,
+    apr_30d: 80,
+    public_key: "F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy",
+    address: "F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy",
+    name: "SAX-USDC",
+  },
+  {
+    pairs: [
+      { name: "SAX", icon: SAX, symbol: "SAX", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+      { name: "USDT", icon: USDT, alt: "USDT", symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
+    ],
+    liquidity: 200000,
+    volume_30d: 300000,
+    fees_30d: 30,
+    apr_30d: 80,
+    public_key: "49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY",
+    address: "49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY",
+    name: "SAX-USDT",
+  },
 ];
 
 export const table_head_list = [
