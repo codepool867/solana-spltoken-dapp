@@ -141,8 +141,8 @@ export const pool_list = [
     volume_30d: 300000,
     fees_30d: 30,
     apr_30d: 80,
-    pool_public_key: "7nknfk12wDGydRqarcoY86nrWRcM2RAggwys1rpprDdB",
-    name: "SAX-USDC",
+    pool_public_key: "G6SLFJopxHCmkEq2E6GGm6EQ6jsM6u1nmtMGdf9M6Ke",
+    name: "SAX80-USDC20",
   },
   {
     pairs: [
@@ -153,8 +153,8 @@ export const pool_list = [
     volume_30d: 300000,
     fees_30d: 30,
     apr_30d: 80,
-    pool_public_key: "49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY",
-    name: "SAX-USDT",
+    pool_public_key: "78zodeD2ZkiuKy5YWjY3m3B9w2zcLJHicbkwN7iEJYqH",
+    name: "SAX80-USDT20",
   },
 ];
 

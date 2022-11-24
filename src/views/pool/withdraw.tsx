@@ -1,7 +1,7 @@
-import React, { type ChangeEvent, type FC, useState } from "react";
+import React, { type ChangeEvent, type FC, useState, useEffect } from "react";
 
 import { Button, Col, Image, Notification, Row } from "components";
-import { floatNumRegex, generateTransactionLink, handleErrors, network, type PoolDetailProps } from "utils";
+import { floatNumRegex, formatBalance, generateTransactionLink, handleErrors, network, type PoolDetailProps } from "utils";
 import { SDK, Vault, WeightedPool } from "solax-sdk/src";
 import { useSDKInit, useTokenInfo } from "contexts";
 import { Keypair, PublicKey } from "@solana/web3.js";
@@ -11,20 +11,36 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
   const [percentageAmount, setPercentageAmount] = useState(100);
   // const [values, setValues] = useState({});
   const { sendTransaction, publicKey } = useWallet();
-  const { faucet } = useSDKInit();
+  const { faucet, vault } = useSDKInit();
   const { connection } = useConnection();
   const [values, setValues] = useState<number[]>([]);
+  const [userPoolAmount, setUserPoolAmount] = useState<number>(0);
   // handle to save values of input
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setValues([...values, (Number(value) * percentageAmount) / 100]);
   };
 
+  useEffect(() => {
+    (async () => {
+      if (faucet) {
+        const provider = faucet.provider;
+        const sdk = new SDK(provider);
+        const pool = await WeightedPool.load(sdk, new PublicKey(pool_public_key));
+        console.log(pool.data.poolMint, "=======");
+        console.log(pool.data);
+        const amount = await connection.getBalance(pool.data.poolMint);
+        setUserPoolAmount(amount);
+        //  const uiAmount = formatBalance(amount, token.mint, 9);
+      }
+    })();
+  }, []);
+
   // handle deposit function
   const handleWithdraw = async () => {
     let signature = "";
     if (publicKey && faucet) {
-      if (percentageAmount) {
+      if (percentageAmount === 0 || userPoolAmount === 0) {
         Notification({ type: "warning", title: "warning", message: "Token input amount is invalid" });
         return;
       }
@@ -38,17 +54,15 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
         } = await connection.getLatestBlockhashAndContext();
         const provider = faucet.provider;
         const sdk = new SDK(provider);
-        const vaultPublicKey = new PublicKey("F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy");
         const poolPublicKey = new PublicKey(pool_public_key);
-        const vault = await Vault.load(sdk, vaultPublicKey);
         const pool = await WeightedPool.load(sdk, poolPublicKey);
-        if (pool) {
+        if (pool && vault) {
           Notification({ title: "Withdrawing...", message: "Preparing Transaction" });
           mainActionStore.setIsTXLoading(true);
 
           const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
             vault,
-            amount: percentageAmount,
+            amount: (percentageAmount * userPoolAmount) / 100,
           });
 
           signature = await sendTransaction(tx, connection, { minContextSlot });

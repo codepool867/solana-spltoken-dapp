@@ -12,7 +12,7 @@ import mainActionStore from "store/mainActionStore";
 const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
-  const { faucet } = useSDKInit();
+  const { faucet, vault } = useSDKInit();
   const amoutInput = useAutoFocus();
   const [values, setValues] = useState<number[]>([]);
   const { balance, getBalance } = useTokenInfo();
@@ -48,18 +48,15 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
         } = await connection.getLatestBlockhashAndContext();
         const provider = faucet.provider;
         const sdk = new SDK(provider);
-        const vaultPublicKey = new PublicKey("F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy");
         const poolPublicKey = new PublicKey(pool_public_key);
-        const vault = await Vault.load(sdk, vaultPublicKey);
         const pool = await WeightedPool.load(sdk, poolPublicKey);
-        if (pool) {
+        if (pool && vault) {
           Notification({ title: "Depositing...", message: "Preparing Transaction" });
           mainActionStore.setIsTXLoading(true);
 
           const { result: outAmount, tx } = await pool.addLiquidityAndResult({
             vault,
             amounts: values,
-            // userKP: vaultKP,
           });
 
           signature = await sendTransaction(tx, connection, { minContextSlot });

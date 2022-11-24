@@ -12,8 +12,8 @@ import { Exchange, TokenModal } from "views";
 import { generateTransactionLink, handleErrors, network, slippage_list } from "utils";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useSDKInit } from "contexts";
-import { Keypair, PublicKey } from "@solana/web3.js";
-import { SDK, Vault, WeightedPool } from "solax-sdk";
+import { PublicKey } from "@solana/web3.js";
+import { SDK, WeightedPool } from "solax-sdk";
 // swap page
 const Swap = () => {
   useEffect(() => {
@@ -22,7 +22,7 @@ const Swap = () => {
     }
   }, []);
   const { publicKey, sendTransaction } = useWallet();
-  const { faucet } = useSDKInit();
+  const { faucet, vault } = useSDKInit();
   const { connection } = useConnection();
   const { inputAmount, inputTokenData, outputTokenData, slippageValue, setSlippageValue, balance } = useTokenInfo();
   const [hasOrder, setHasOrder] = useState(true);
@@ -68,19 +68,15 @@ const Swap = () => {
         } = await connection.getLatestBlockhashAndContext();
         const provider = faucet.provider;
         const sdk = new SDK(provider);
-        const vaultPublicKey = new PublicKey("F15R9LdtzZxTxJTtGxMRKrfggDXGY22r3r58b6vmmTxy");
-        let poolPublicKey = new PublicKey("7nknfk12wDGydRqarcoY86nrWRcM2RAggwys1rpprDdB");
+        let poolPublicKey = new PublicKey("G6SLFJopxHCmkEq2E6GGm6EQ6jsM6u1nmtMGdf9M6Ke");
         const swapNamePair = inputTokenData.name + outputTokenData.name;
-        // if(swapNamePair==='SAXUSDC' || swapNamePair==='USDCSAX'){
 
-        // }
         if (swapNamePair === "SAXUSDT" || swapNamePair === "USDTSAX") {
-          poolPublicKey = new PublicKey("49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY");
+          poolPublicKey = new PublicKey("78zodeD2ZkiuKy5YWjY3m3B9w2zcLJHicbkwN7iEJYqH");
         }
-        const vault = await Vault.load(sdk, vaultPublicKey);
         const pool = await WeightedPool.load(sdk, poolPublicKey);
 
-        if (pool) {
+        if (pool && vault) {
           Notification({ title: "Swapping...", message: "Preparing Transaction" });
           mainActionStore.setIsTXLoading(true);
 
