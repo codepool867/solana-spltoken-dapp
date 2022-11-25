@@ -7,7 +7,7 @@ import { useTokenInfo } from "contexts";
 import { floatNumRegex, SelectedTokenType, type ExchangeProps, type PairProps } from "utils";
 import mainActionStore from "store/mainActionStore";
 // if direction is 0, input token. direction is 1, output token
-const Exchange = ({ direction, order }: ExchangeProps) => {
+const Exchange = ({ direction }: ExchangeProps) => {
   const { setSelectedTokenType, inputTokenData, outputTokenData, setInputAmount, balance } = useTokenInfo();
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLInputElement>(null);

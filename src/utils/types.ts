@@ -61,13 +61,6 @@ export interface NotificationProps {
 // types for exchange
 export interface ExchangeProps {
   direction: number;
-  // token_list: {
-  //   name: string;
-  //   icon: string;
-  //   alt: string;
-  //   balance: number;
-  // }[];
-  order: boolean;
 }
 
 // types for pair of pool detail

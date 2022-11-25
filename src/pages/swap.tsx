@@ -53,7 +53,6 @@ const Swap = () => {
     const outputTokenDataRef = outputTokenData;
     setOutputTokenData(inputTokenData);
     setInputTokenData(outputTokenDataRef);
-    setHasOrder(!hasOrder);
   };
 
   const handleSwap = async () => {
@@ -137,11 +136,11 @@ const Swap = () => {
             className="max-w-[540px] w-full bg-card_gradient6 rounded-[20px] p-[2px]"
           >
             <Col className="bg-copy_right bg-opacity-80 rounded-[20px] p-[30px] normal:px-[15px] normal:py-[20px] justify-between h-full space-y-[12px]">
-              <Exchange direction={0} order={hasOrder} />
+              <Exchange direction={0} />
               <div className="p-2">
                 <TbArrowsUpDown size={30} className="max-w-fit w-full m-auto cursor-pointer" onClick={() => handleHasOrder()} />
               </div>
-              <Exchange direction={1} order={!hasOrder} />
+              <Exchange direction={1} />
               <Row className="justify-between font-medium text-[16px]">
                 <p className="pl-[20px] mobile:pl-[15px]">Slippage tolerance</p>
                 <Row className="items-center space-x-2 pr-[20px] mobile:pr-[15px] ">
