@@ -64,7 +64,8 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
           await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
           const link = generateTransactionLink(signature, network);
           Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
-          setValues([]);
+          getBalance();
+          // setValues([]);
         } else {
         }
 

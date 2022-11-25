@@ -9,7 +9,7 @@ import { Button, Col, Container, LaunchApp, Notification, Page, Row } from "comp
 import { useTokenInfo } from "contexts";
 import mainActionStore from "store/mainActionStore";
 import { Exchange, TokenModal } from "views";
-import { generateTransactionLink, handleErrors, network, slippage_list } from "utils";
+import { generateTransactionLink, handleErrors, network, pool_list, slippage_list } from "utils";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useSDKInit } from "contexts";
 import { PublicKey } from "@solana/web3.js";
@@ -24,7 +24,17 @@ const Swap = () => {
   const { publicKey, sendTransaction } = useWallet();
   const { faucet, vault } = useSDKInit();
   const { connection } = useConnection();
-  const { inputAmount, inputTokenData, outputTokenData, slippageValue, setSlippageValue, balance } = useTokenInfo();
+  const {
+    inputAmount,
+    inputTokenData,
+    outputTokenData,
+    setInputTokenData,
+    setOutputTokenData,
+    slippageValue,
+    setSlippageValue,
+    balance,
+    getBalance,
+  } = useTokenInfo();
   const [hasOrder, setHasOrder] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -40,6 +50,9 @@ const Swap = () => {
     setSlippageValue(result);
   };
   const handleHasOrder = () => {
+    const outputTokenDataRef = outputTokenData;
+    setOutputTokenData(inputTokenData);
+    setInputTokenData(outputTokenDataRef);
     setHasOrder(!hasOrder);
   };
 
@@ -71,11 +84,12 @@ const Swap = () => {
         } = await connection.getLatestBlockhashAndContext();
         const provider = faucet.provider;
         const sdk = new SDK(provider);
-        let poolPublicKey = new PublicKey("G6SLFJopxHCmkEq2E6GGm6EQ6jsM6u1nmtMGdf9M6Ke");
+
+        let poolPublicKey = new PublicKey(pool_list[0].public_key);
         const swapNamePair = inputTokenData.name + outputTokenData.name;
 
         if (swapNamePair === "SAXUSDT" || swapNamePair === "USDTSAX") {
-          poolPublicKey = new PublicKey("78zodeD2ZkiuKy5YWjY3m3B9w2zcLJHicbkwN7iEJYqH");
+          poolPublicKey = new PublicKey(pool_list[1].public_key);
         }
         const pool = await WeightedPool.load(sdk, poolPublicKey);
 
@@ -95,6 +109,7 @@ const Swap = () => {
           await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
           const link = generateTransactionLink(signature, network);
           Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
+          getBalance();
         } else {
         }
 

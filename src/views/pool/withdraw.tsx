@@ -15,6 +15,7 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
   const { connection } = useConnection();
   const [values, setValues] = useState<number[]>([]);
   const [userPoolAmount, setUserPoolAmount] = useState<number>(0);
+  const { getBalance } = useTokenInfo();
   // handle to save values of input
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -70,6 +71,7 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
           await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
           const link = generateTransactionLink(signature, network);
           Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
+          getBalance();
           setValues([]);
         } else {
         }

@@ -14,12 +14,12 @@ const Exchange = ({ direction, order }: ExchangeProps) => {
   const [tokenData, setTokenData] = useState<PairProps | undefined>();
 
   useEffect(() => {
-    if (order) {
+    if (direction === 0) {
       setTokenData(inputTokenData);
     } else {
       setTokenData(outputTokenData);
     }
-  }, [order, inputTokenData, outputTokenData]);
+  }, [direction, inputTokenData, outputTokenData]);
 
   const handleShowTokenModal = () => {
     if (order) {
