@@ -22,29 +22,27 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
     setValues([...values, (Number(value) * percentageAmount) / 100]);
   };
 
-  useEffect(() => {
-    (async () => {
-      if (faucet) {
-        const provider = faucet.provider;
-        const sdk = new SDK(provider);
-        const pool = await WeightedPool.load(sdk, new PublicKey(pool_public_key));
-        console.log(pool.data.poolMint, "=======");
-        console.log(pool.data);
-        const amount = await connection.getBalance(pool.data.poolMint);
-        setUserPoolAmount(amount);
-        //  const uiAmount = formatBalance(amount, token.mint, 9);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (faucet) {
+  //       const provider = faucet.provider;
+  //       const sdk = new SDK(provider);
+  //       const pool = await WeightedPool.load(sdk, new PublicKey(pool_public_key));
+  //       const amount = await connection.getBalance(pool.data.poolMint);
+  //       setUserPoolAmount(amount);
+  //       //  const uiAmount = formatBalance(amount, token.mint, 9);
+  //     }
+  //   })();
+  // }, []);
 
   // handle deposit function
   const handleWithdraw = async () => {
     let signature = "";
     if (publicKey && faucet) {
-      if (percentageAmount === 0 || userPoolAmount === 0) {
-        Notification({ type: "warning", title: "warning", message: "Token input amount is invalid" });
-        return;
-      }
+      // if (percentageAmount === 0 || userPoolAmount === 0) {
+      //   Notification({ type: "warning", title: "warning", message: "Token input amount is invalid" });
+      //   return;
+      // }
       // if() {
       // }
       mainActionStore.setIsActionLoading(true);
@@ -60,19 +58,25 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
         if (pool && vault) {
           Notification({ title: "Withdrawing...", message: "Preparing Transaction" });
           mainActionStore.setIsTXLoading(true);
+          const result = await connection.getParsedTokenAccountsByOwner(publicKey as PublicKey, { mint: pool.data.poolMint });
+          const parsedInfo = result.value[0].account.data.parsed;
+          const amount = parsedInfo.info.tokenAmount.uiAmount;
+          if (amount < 0.1) {
+            Notification({ type: "warning", title: "Warning", message: "You don't have any balance in this pool" });
+          } else {
+            const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
+              vault,
+              amount: (amount * percentageAmount) / 100,
+            });
 
-          const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
-            vault,
-            amount: (percentageAmount * userPoolAmount) / 100,
-          });
-
-          signature = await sendTransaction(tx, connection, { minContextSlot });
-          mainActionStore.setIsTXLoading(false);
-          await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
-          const link = generateTransactionLink(signature, network);
-          Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
-          getBalance();
-          setValues([]);
+            signature = await sendTransaction(tx, connection, { minContextSlot });
+            mainActionStore.setIsTXLoading(false);
+            await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
+            const link = generateTransactionLink(signature, network);
+            Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
+            getBalance();
+            // setValues([]);
+          }
         } else {
         }
 
