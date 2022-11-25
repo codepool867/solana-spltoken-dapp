@@ -143,7 +143,7 @@ export const pool_list = [
     fees_30d: 30,
     apr_30d: 80,
     public_key: "G6SLFJopxHCmkEq2E6GGm6EQ6jsM6u1nmtMGdf9M6Ke",
-    address: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX",
+    address: "G6SLFJopxHCmkEq2E6GGm6EQ6jsM6u1nmtMGdf9M6Ke",
     name: "SAX80-USDC20",
   },
   {
