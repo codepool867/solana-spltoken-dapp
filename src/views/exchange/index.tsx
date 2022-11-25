@@ -22,7 +22,7 @@ const Exchange = ({ direction, order }: ExchangeProps) => {
   }, [direction, inputTokenData, outputTokenData]);
 
   const handleShowTokenModal = () => {
-    if (order) {
+    if (direction === 0) {
       setSelectedTokenType(SelectedTokenType.Input);
     } else {
       setSelectedTokenType(SelectedTokenType.Output);
