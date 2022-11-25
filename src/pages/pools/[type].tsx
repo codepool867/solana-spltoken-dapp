@@ -9,20 +9,40 @@ import { PairProps } from "utils";
 import poolStore from "store/poolStore";
 import mainActionStore from "store/mainActionStore";
 import { observer } from "mobx-react-lite";
+import axios from "axios";
 // pool details page
 const Liquidity = () => {
   const [poolName, setPoolName] = useState<string>("");
   const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
   const [detailPublicKey, setDetailPublickey] = useState<string>("");
   const router = useRouter();
+  // console.log(router);
+  // useEffect(() => {
+  //   const { type } = router.query;
+  //   poolStore.setDetailPoolIndex(type as string);
+  //   mainActionStore.setIsActionLoading(false);
+  //   setPoolDetail(poolStore.pools[poolStore.detailPoolIndex].pairs);
+  //   setPoolName(poolStore.pools[poolStore.detailPoolIndex].name);
+  //   setDetailPublickey(poolStore.pools[poolStore.detailPoolIndex].public_key);
+  // }, []);
   useEffect(() => {
     const { type } = router.query;
-    poolStore.setDetailPoolIndex(type as string);
-    mainActionStore.setIsActionLoading(false);
-    setPoolDetail(poolStore.pools[poolStore.detailPoolIndex].pairs);
-    setPoolName(poolStore.pools[poolStore.detailPoolIndex].name);
-    setDetailPublickey(poolStore.pools[poolStore.detailPoolIndex].public_key);
-  }, []);
+    console.log(type);
+    if (type)
+      (async () => {
+        try {
+          const res = await axios({
+            method: "GET",
+            url: "/api/poolDetail",
+            params: { address: type as string },
+          });
+          setPoolDetail(res.data.pairs);
+          setPoolName(res.data.name);
+          setDetailPublickey(res.data.public_key);
+        } catch {}
+        mainActionStore.setIsActionLoading(false);
+      })();
+  }, [router.query]);
 
   const [ctaType, setCtaType] = useState("deposit");
   return (
