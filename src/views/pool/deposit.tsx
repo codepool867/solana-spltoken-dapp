@@ -1,7 +1,7 @@
 import React, { type ChangeEvent, type FC, useState } from "react";
 
 import { Button, Col, Image, Notification, Row } from "components";
-import { floatNumRegex, generateTransactionLink, handleErrors, network, type PoolDetailProps } from "utils";
+import { floatNumRegex, generateTransactionLink, handleErrors, network, PoolProps, type PoolDetailProps } from "utils";
 
 import { SDK, Vault, WeightedPool } from "solax-sdk/src";
 import { useSDKInit, useTokenInfo } from "contexts";
@@ -9,7 +9,7 @@ import { Keypair, PublicKey } from "@solana/web3.js";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import useAutoFocus from "hooks/useAutoFocus";
 import mainActionStore from "store/mainActionStore";
-const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
+const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const { faucet, vault } = useSDKInit();
@@ -48,7 +48,7 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
         } = await connection.getLatestBlockhashAndContext();
         const provider = faucet.provider;
         const sdk = new SDK(provider);
-        const poolPublicKey = new PublicKey(pool_public_key);
+        const poolPublicKey = new PublicKey(poolDetail.public_key);
         const pool = await WeightedPool.load(sdk, poolPublicKey);
         if (pool && vault) {
           Notification({ title: "Depositing...", message: "Preparing Transaction" });
@@ -83,7 +83,7 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail, pool_public_key }) => {
 
   return (
     <Col className="space-y-8 divide-gray-700 divide-y">
-      {poolDetail.map((pool, index) => (
+      {poolDetail.pairs.map((pool, index) => (
         <Col key={`pool_detail_${index}`} className="space-y-4 pt-8">
           <Row className="justify-between space-x-2">
             <div className="select-none">

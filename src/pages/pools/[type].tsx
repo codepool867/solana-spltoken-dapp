@@ -5,29 +5,19 @@ import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 import { Col, Container, Image, Page, Row } from "components";
 import { PoolDeposit, PoolWithdraw } from "views";
-import { PairProps } from "utils";
+import { handleErrors, PairProps, PoolProps } from "utils";
 import poolStore from "store/poolStore";
 import mainActionStore from "store/mainActionStore";
 import { observer } from "mobx-react-lite";
 import axios from "axios";
 // pool details page
 const Liquidity = () => {
-  const [poolName, setPoolName] = useState<string>("");
-  const [poolDetail, setPoolDetail] = useState<PairProps[] | undefined>();
-  const [detailPublicKey, setDetailPublickey] = useState<string>("");
+  // const [poolName, setPoolName] = useState<string>("");
+  const [poolDetail, setPoolDetail] = useState<PoolProps | undefined>();
+
   const router = useRouter();
-  // console.log(router);
-  // useEffect(() => {
-  //   const { type } = router.query;
-  //   poolStore.setDetailPoolIndex(type as string);
-  //   mainActionStore.setIsActionLoading(false);
-  //   setPoolDetail(poolStore.pools[poolStore.detailPoolIndex].pairs);
-  //   setPoolName(poolStore.pools[poolStore.detailPoolIndex].name);
-  //   setDetailPublickey(poolStore.pools[poolStore.detailPoolIndex].public_key);
-  // }, []);
   useEffect(() => {
     const { type } = router.query;
-    console.log(type);
     if (type)
       (async () => {
         try {
@@ -36,11 +26,12 @@ const Liquidity = () => {
             url: "/api/poolDetail",
             params: { address: type as string },
           });
-          setPoolDetail(res.data.pairs);
-          setPoolName(res.data.name);
-          setDetailPublickey(res.data.public_key);
-        } catch {}
-        mainActionStore.setIsActionLoading(false);
+          setPoolDetail(res.data);
+        } catch (error) {
+          handleErrors(error);
+        } finally {
+          mainActionStore.setIsActionLoading(false);
+        }
       })();
   }, [router.query]);
 
@@ -55,9 +46,9 @@ const Liquidity = () => {
               <p className="uppercase text-[24px]">Back </p>
             </Row>
             <Col className="space-y-1">
-              <p className="text-[36px] tablet:text-[24px] font-bold">{poolName} Pool</p>
+              <p className="text-[36px] tablet:text-[24px] font-bold">{poolDetail.name} Pool</p>
               <Row className="-space-x-2">
-                {poolDetail.map((pair, index) => (
+                {poolDetail.pairs.map((pair, index) => (
                   <Image key={`pair_logo_${index}`} className="rounded-full" src={pair.icon} alt={pair.alt} width={40} height={40} />
                 ))}
               </Row>
@@ -80,11 +71,7 @@ const Liquidity = () => {
                 </div>
               </Row>
               <div className="pt-4">
-                {ctaType === "deposit" ? (
-                  <PoolDeposit poolDetail={poolDetail} pool_public_key={detailPublicKey} />
-                ) : (
-                  <PoolWithdraw poolDetail={poolDetail} pool_public_key={detailPublicKey} />
-                )}
+                {ctaType === "deposit" ? <PoolDeposit poolDetail={poolDetail} /> : <PoolWithdraw poolDetail={poolDetail} />}
               </div>
             </div>
           </Col>

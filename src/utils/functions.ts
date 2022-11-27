@@ -30,9 +30,11 @@ export const formatBalance = (balance: number, mintAddress: string, decimal: num
     decimals: decimal, // make sure this is correct!
     cluster: "devnet", //process.env.NEXT_PUBLIC_NETWORK,
   });
-  return TokenAmount.toUiAmountSync({ amount: new BN(balance), token: token }).toLocaleString(undefined, { minimumFractionDigits: 6 });
+  return TokenAmount.toUiAmountSync({ amount: new BN(balance), token: token });
 };
-
+export const formatBalanceToString = (balance: number) => {
+  return balance.toLocaleString(undefined, { minimumFractionDigits: 6 });
+};
 // handle overflow
 export const handleAdjustOverflow = (isOpen: boolean) => {
   isOpen ? (document.body.style.overflowY = "hidden") : (document.body.style.overflowY = "scroll");
