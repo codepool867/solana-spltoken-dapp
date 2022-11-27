@@ -4,11 +4,11 @@ import { TbChevronDown } from "react-icons/tb";
 
 import { Border, Image, Row } from "components";
 import { useTokenInfo } from "contexts";
-import { floatNumRegex, SelectedTokenType, type ExchangeProps, type PairProps } from "utils";
+import { floatNumRegex, formatBalanceToString, SelectedTokenType, type ExchangeProps, type PairProps } from "utils";
 import mainActionStore from "store/mainActionStore";
 // if direction is 0, input token. direction is 1, output token
 const Exchange = ({ direction }: ExchangeProps) => {
-  const { setSelectedTokenType, inputTokenData, outputTokenData, setInputAmount, balance } = useTokenInfo();
+  const { setSelectedTokenType, inputTokenData, outputTokenData, setInputAmount, balance, outputAmount } = useTokenInfo();
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLInputElement>(null);
   const [tokenData, setTokenData] = useState<PairProps | undefined>();
@@ -50,7 +50,7 @@ const Exchange = ({ direction }: ExchangeProps) => {
               <Border vertical={true} className="h-4 bg-white" />
             </>
           )}
-          <p className="text-gray-400 last:text-[14px]">Balance: {tokenData ? balance[tokenData.name] : 0}</p>
+          <p className="text-gray-400 last:text-[14px]">Balance: {tokenData ? formatBalanceToString(balance[tokenData.name]) : 0}</p>
         </Row>
       </Row>
       <Row className="justify-between space-x-2">
@@ -72,7 +72,7 @@ const Exchange = ({ direction }: ExchangeProps) => {
           type="number"
           min={0}
           pattern={`${floatNumRegex}`}
-          placeholder="0.00"
+          placeholder={direction === 0 ? "0.00" : `${outputAmount}`}
           readOnly={direction === 1}
           step="any"
           onChange={(e: any) => setInputAmount(e.target.value)}

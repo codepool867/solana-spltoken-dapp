@@ -4,7 +4,7 @@ import { TfiClose } from "react-icons/tfi";
 
 import { Image, Modal, Col, Row } from "components";
 import { useTokenInfo } from "contexts";
-import { prefer_token_list, SelectedTokenType, type PairProps } from "utils";
+import { formatBalanceToString, prefer_token_list, SelectedTokenType, type PairProps } from "utils";
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
 import mainActionStore from "store/mainActionStore";
@@ -97,7 +97,7 @@ const TokenModal = () => {
                   <p key={`${token.mint}_p_${index}`}>{token.name}</p>
                 )}
               </div>
-              <p className="text-gray-400 text-[12px]">{balance[token.name]}</p>
+              <p className="text-gray-400 text-[12px]">{formatBalanceToString(balance[token.name])}</p>
             </Row>
           ))}
         </div>

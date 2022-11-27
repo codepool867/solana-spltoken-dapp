@@ -18,7 +18,7 @@ const Pools = () => {
       <Container>
         <Col className="relative min-w-full items-center justify-center">
           <LaunchApp title="pools" />
-          <Col animate="fade-in" delay="1500" className="z-50 pb-10 laptop:pb-6 max-w-[560px] w-full space-y-4">
+          {/* <Col animate="fade-in" delay="1500" className="z-50 pb-10 laptop:pb-6 max-w-[560px] w-full space-y-4">
             <div className="grid grid-cols-3 mobile:grid-cols-1 gap-2">
               {wallet.connected && (
                 <div className="bg-card_gradient3 hover:opacity-80 p-2 rounded-md cursor-pointer text-center">My Pools</div>
@@ -36,7 +36,7 @@ const Pools = () => {
               />
               <PoolGridListButton action={handleGrid} gridStatus={gridStatus}></PoolGridListButton>
             </Row>
-          </Col>
+          </Col> */}
           <PoolMobile searchValue={searchValue} gridStatus={gridStatus} />
         </Col>
       </Container>

@@ -34,9 +34,39 @@ const Swap = () => {
     setSlippageValue,
     balance,
     getBalance,
+    setOutputAmount,
   } = useTokenInfo();
   const [hasOrder, setHasOrder] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    if (faucet && inputTokenData && outputTokenData && inputAmount) {
+      const provider = faucet.provider;
+      const sdk = new SDK(provider);
+
+      let poolPublicKey = new PublicKey(pool_list[0].public_key);
+      const swapNamePair = inputTokenData.name + outputTokenData.name;
+
+      if (swapNamePair === "SAXUSDT" || swapNamePair === "USDTSAX") {
+        poolPublicKey = new PublicKey(pool_list[1].public_key);
+      }
+      (async () => {
+        const pool = await WeightedPool.load(sdk, poolPublicKey);
+        if (pool && vault) {
+          // Notification({ title: "Swapping...", message: "Preparing Transaction" });
+          mainActionStore.setIsTXLoading(true);
+
+          const { result: outAmount, tx } = await pool.swapAndResult({
+            vault,
+            fromMintK: new PublicKey(inputTokenData.mint),
+            toMintK: new PublicKey(outputTokenData.mint),
+            amount: inputAmount,
+          });
+          console.log(outAmount, "==========");
+          setOutputAmount(outAmount);
+        }
+      })();
+    }
+  }, [inputTokenData, outputTokenData, faucet, vault, inputAmount, setOutputAmount]);
 
   const ref = useDetectClickOutside({
     onTriggered: () => setIsOpen(false),
@@ -102,12 +132,13 @@ const Swap = () => {
             toMintK: new PublicKey(outputTokenData.mint),
             amount: inputAmount,
           });
-
+          console.log(outAmount, "==========");
           signature = await sendTransaction(tx, connection, { minContextSlot });
           mainActionStore.setIsTXLoading(false);
           await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
           const link = generateTransactionLink(signature, network);
           Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
+          await pool.confirmTX(signature); // --> "Transaction success"
           getBalance();
         } else {
         }
