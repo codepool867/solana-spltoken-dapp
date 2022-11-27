@@ -45,7 +45,7 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [inputTokenData, setInputTokenData] = useState<PairProps | undefined>();
   const [outputTokenData, setOutputTokenData] = useState<PairProps | undefined>();
   const [inputAmount, setInputAmount] = useState<number>();
-  const [outputAmount, setOutputAmount] = useState<number>();
+  const [outputAmount, setOutputAmount] = useState<number>(0);
   const [balance, setBalance] = useState<BalanceProps>({});
   const [slippageValue, setSlippageValue] = useState<number>(0.1);
 

@@ -61,7 +61,6 @@ const Swap = () => {
             toMintK: new PublicKey(outputTokenData.mint),
             amount: inputAmount,
           });
-          console.log(outAmount, "==========");
           setOutputAmount(outAmount);
         }
       })();
@@ -132,7 +131,6 @@ const Swap = () => {
             toMintK: new PublicKey(outputTokenData.mint),
             amount: inputAmount,
           });
-          console.log(outAmount, "==========");
           signature = await sendTransaction(tx, connection, { minContextSlot });
           mainActionStore.setIsTXLoading(false);
           await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
