@@ -129,6 +129,7 @@ const Swap = () => {
             vault,
             fromMintK: new PublicKey(inputTokenData.mint),
             toMintK: new PublicKey(outputTokenData.mint),
+            slippageTolerance: slippageValue / 100,
             amount: inputAmount,
           });
           signature = await sendTransaction(tx, connection, { minContextSlot });
