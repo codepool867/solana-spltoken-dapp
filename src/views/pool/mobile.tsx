@@ -83,22 +83,22 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
                 </Col>
                 <Col>
                   <p className="uppercase font-medium text-[14px] text-gray-500">apr</p>
-                  <div className="text-[20px] ">{pool.apr_30d.toFixed(2)}%</div>
+                  <div className="text-[20px] ">{/* {pool.apr_30d.toFixed(2)}% */}</div>
                 </Col>
               </Row>
               <Row className="justify-between text-[16px] last:text-[14px] leading-[31px]">
                 <Col>
                   <p className="uppercase font-medium text-gray-400">Liquidity</p>
-                  <div className="text-right">${pool.liquidity.toLocaleString()}</div>
+                  {/* <div className="text-right">${pool.liquidity.toLocaleString()}</div> */}
                 </Col>
                 <Col>
                   <p className="uppercase font-medium text-gray-400">Volume 30d</p>
                   {index === result.length - 1 ? (
                     <div ref={lastPoolElementRef} className="text-[16px] text-right">
-                      ${pool.liquidity.toLocaleString()}
+                      {/* ${pool.liquidity.toLocaleString()} */}
                     </div>
                   ) : (
-                    <div className="text-[16px] text-right">${pool.liquidity.toLocaleString()}</div>
+                    <div className="text-[16px] text-right">{/* ${pool.liquidity.toLocaleString()} */}</div>
                   )}
                 </Col>
               </Row>
