@@ -240,7 +240,7 @@ const Swap = () => {
                             onChange={(e) => {
                               handleInputSlippageValue(e.target.value);
                             }}
-                            className=" h-6 w-full bg-transparent  p-2 outline-none"
+                            className=" h-6 w-full bg-transparent  p-2 outline-none font-thin"
                           ></input>
                         </Row>
                       </div>

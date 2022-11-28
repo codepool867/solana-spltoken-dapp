@@ -47,7 +47,7 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   const [inputAmount, setInputAmount] = useState<number>();
   const [outputAmount, setOutputAmount] = useState<number>(0);
   const [balance, setBalance] = useState<BalanceProps>({});
-  const [slippageValue, setSlippageValue] = useState<number>(0.1);
+  const [slippageValue, setSlippageValue] = useState<number>(0.5);
 
   useEffect(() => {
     // when connect wallet, call getBalance()
