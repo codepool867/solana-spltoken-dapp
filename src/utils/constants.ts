@@ -222,3 +222,4 @@ export const table_head_list = [
   { title: "fees 30d", width: "w-[10%]" },
   { title: "apr 30d", width: "w-[15%]" },
 ];
+export const default_link = "/swap?from=AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX&to=SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa";

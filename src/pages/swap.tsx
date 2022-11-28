@@ -9,11 +9,13 @@ import { Button, Col, Container, LaunchApp, Notification, Page, Row } from "comp
 import { useTokenInfo } from "contexts";
 import mainActionStore from "store/mainActionStore";
 import { Exchange, TokenModal } from "views";
-import { generateTransactionLink, handleErrors, network, pool_list, slippage_list } from "utils";
+import { default_link, generateTransactionLink, handleErrors, network, pool_list, slippage_list } from "utils";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useSDKInit } from "contexts";
 import { PublicKey } from "@solana/web3.js";
 import { SDK, WeightedPool } from "solax-sdk";
+import { useRouter } from "next/router";
+import axios from "axios";
 // swap page
 const Swap = () => {
   useEffect(() => {
@@ -38,19 +40,64 @@ const Swap = () => {
   } = useTokenInfo();
   const [hasOrder, setHasOrder] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [poolPublicKey, setPoolPublckey] = useState("");
+  const router = useRouter();
+  // const { from, to } = router.query;
   useEffect(() => {
-    if (faucet && inputTokenData && outputTokenData && inputAmount) {
+    const { from, to } = router.query;
+    if (from && to) {
+      (async () => {
+        try {
+          const res = await axios({
+            method: "GET",
+            url: "api/swap",
+            params: { fromMint: from, toMint: to },
+          });
+          const { fromTokenData, toTokenData, poolPublicKey } = res.data;
+          setInputTokenData(fromTokenData);
+          setOutputTokenData(toTokenData);
+          setPoolPublckey(poolPublicKey);
+          if (faucet && inputTokenData && outputTokenData && inputAmount) {
+            const provider = faucet.provider;
+            const sdk = new SDK(provider);
+
+            const pool = await WeightedPool.load(sdk, new PublicKey(poolPublicKey));
+            if (pool && vault) {
+              // Notification({ title: "Swapping...", message: "Preparing Transaction" });
+              mainActionStore.setIsTXLoading(true);
+
+              const { result: outAmount, tx } = await pool.swapAndResult({
+                vault,
+                fromMintK: new PublicKey(inputTokenData.mint),
+                toMintK: new PublicKey(outputTokenData.mint),
+                amount: inputAmount,
+              });
+              setOutputAmount(outAmount);
+            }
+          }
+        } catch (error) {
+          handleErrors(error);
+        } finally {
+          mainActionStore.setIsActionLoading(false);
+        }
+      })();
+    }
+  }, [router.query, setInputTokenData, setOutputTokenData, setPoolPublckey]);
+  useEffect(() => {
+    const { from, to } = router.query;
+    if (from === undefined && inputTokenData && outputTokenData) {
+      router.push(`/swap?from=${inputTokenData.mint}&to=${outputTokenData.mint}`);
+    } else if (from === undefined && inputTokenData === undefined) {
+      router.push(default_link);
+    }
+  }, [inputTokenData, outputTokenData, router]);
+  useEffect(() => {
+    if (faucet && inputTokenData && outputTokenData && inputAmount && poolPublicKey) {
       const provider = faucet.provider;
       const sdk = new SDK(provider);
-
-      let poolPublicKey = new PublicKey(pool_list[0].public_key);
-      const swapNamePair = inputTokenData.name + outputTokenData.name;
-
-      if (swapNamePair === "SAXUSDT" || swapNamePair === "USDTSAX") {
-        poolPublicKey = new PublicKey(pool_list[1].public_key);
-      }
       (async () => {
-        const pool = await WeightedPool.load(sdk, poolPublicKey);
+        console.log(poolPublicKey, "===========");
+        const pool = await WeightedPool.load(sdk, new PublicKey(poolPublicKey));
         if (pool && vault) {
           // Notification({ title: "Swapping...", message: "Preparing Transaction" });
           mainActionStore.setIsTXLoading(true);
@@ -64,8 +111,10 @@ const Swap = () => {
           setOutputAmount(outAmount);
         }
       })();
+    } else if (!poolPublicKey) {
+      setOutputAmount(0);
     }
-  }, [inputTokenData, outputTokenData, faucet, vault, inputAmount, setOutputAmount]);
+  }, [inputTokenData, outputTokenData, faucet, vault, inputAmount, setOutputAmount, poolPublicKey]);
 
   const ref = useDetectClickOutside({
     onTriggered: () => setIsOpen(false),
@@ -113,13 +162,13 @@ const Swap = () => {
         const provider = faucet.provider;
         const sdk = new SDK(provider);
 
-        let poolPublicKey = new PublicKey(pool_list[0].public_key);
-        const swapNamePair = inputTokenData.name + outputTokenData.name;
+        // let poolPublicKey = new PublicKey(pool_list[0].public_key);
+        // const swapNamePair = inputTokenData.name + outputTokenData.name;
 
-        if (swapNamePair === "SAXUSDT" || swapNamePair === "USDTSAX") {
-          poolPublicKey = new PublicKey(pool_list[1].public_key);
-        }
-        const pool = await WeightedPool.load(sdk, poolPublicKey);
+        // if (swapNamePair === "SAXUSDT" || swapNamePair === "USDTSAX") {
+        //   poolPublicKey = new PublicKey(pool_list[1].public_key);
+        // }
+        const pool = await WeightedPool.load(sdk, new PublicKey(poolPublicKey));
 
         if (pool && vault) {
           Notification({ title: "Swapping...", message: "Preparing Transaction" });
@@ -133,7 +182,8 @@ const Swap = () => {
             amount: inputAmount,
           });
           signature = await sendTransaction(tx, connection, { minContextSlot });
-          mainActionStore.setIsTXLoading(false);
+          Notification({ type: "success", title: "Submited", message: "Transaction is submited " });
+
           await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
           const link = generateTransactionLink(signature, network);
           Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });

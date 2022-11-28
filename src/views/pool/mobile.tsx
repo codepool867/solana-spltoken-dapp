@@ -46,11 +46,9 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
 
   const handleRoute = (poolAddress: string) => {
     poolStore.setDetailPoolIndex(poolAddress);
-    console.log("sssssss", poolStore.detailPoolIndex);
     router.push(`pools/${poolAddress}`);
-    console.log(poolAddress, "==============");
   };
-  let gridStyle = "z-50 w-full  grid-cols-1 max-w-[560px] laptop:max-w-[560px] gap-6";
+  let gridStyle = "z-50 w-1/2  grid-cols-1 max-w-[560px] laptop:max-w-[560px] gap-6 self-start";
   if (gridStatus && result.length > 1) {
     gridStyle = " w-full grid-cols-2 laptop:grid-cols-1 laptop:max-w-[560px] gap-6";
   }
@@ -82,17 +80,17 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
                   </Row>
                 </Col>
                 <Col>
-                  <p className="uppercase font-medium text-[14px] text-gray-500">apr</p>
+                  {/* <p className="uppercase font-medium text-[14px] text-gray-500">apr</p> */}
                   <div className="text-[20px] ">{/* {pool.apr_30d.toFixed(2)}% */}</div>
                 </Col>
               </Row>
               <Row className="justify-between text-[16px] last:text-[14px] leading-[31px]">
                 <Col>
-                  <p className="uppercase font-medium text-gray-400">Liquidity</p>
+                  {/* <p className="uppercase font-medium text-gray-400">Liquidity</p> */}
                   {/* <div className="text-right">${pool.liquidity.toLocaleString()}</div> */}
                 </Col>
                 <Col>
-                  <p className="uppercase font-medium text-gray-400">Volume 30d</p>
+                  {/* <p className="uppercase font-medium text-gray-400">Volume 30d</p> */}
                   {index === result.length - 1 ? (
                     <div ref={lastPoolElementRef} className="text-[16px] text-right">
                       {/* ${pool.liquidity.toLocaleString()} */}

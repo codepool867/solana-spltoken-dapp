@@ -8,14 +8,16 @@ import { formatBalanceToString, prefer_token_list, SelectedTokenType, type PairP
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
 import mainActionStore from "store/mainActionStore";
+import Router, { useRouter } from "next/router";
 const TokenModal = () => {
-  const { selectedTokenType, setInputTokenData, setOutputTokenData, balance } = useTokenInfo();
+  const { selectedTokenType, setInputTokenData, setOutputTokenData, inputTokenData, outputTokenData, balance } = useTokenInfo();
   const [searchValue, setSearchValue] = useState<string>("");
   //handle server side pagination infinite scroll
 
   const preferTokens = prefer_token_list;
 
   const observer = useRef<IntersectionObserver>();
+  const router = useRouter();
   const lastTokenElementRef = useCallback((node: any) => {
     if (mainActionStore.isActionLoading) return;
     if (observer.current) observer.current.disconnect();
@@ -30,14 +32,39 @@ const TokenModal = () => {
 
   const handleChooseToken = (token: PairProps) => {
     if (selectedTokenType === SelectedTokenType.Input) {
-      setInputTokenData(token);
+      // setInputTokenData(token);
+      const { from, to } = router.query;
+      router.push(`/swap?from=${token.mint}&to=${to}`);
     } else {
-      setOutputTokenData(token);
+      // setOutputTokenData(token);
+      const { from, to } = router.query;
+      router.push(`/swap?from=${from}&to=${token.mint}`);
     }
     mainActionStore.setShowModal(false);
   };
   const result = swapTokenStore.swapTokens.filter((token) => {
     if (token) {
+      if (selectedTokenType === SelectedTokenType.Input && outputTokenData) {
+        if (token.mint === outputTokenData.mint) {
+          return false;
+        }
+        if (outputTokenData.name !== "SAX") {
+          if (token.name !== "SAX") {
+            return false;
+          }
+        }
+      }
+      if (selectedTokenType === SelectedTokenType.Output && inputTokenData) {
+        if (token.mint === inputTokenData.mint) {
+          return false;
+        }
+        if (inputTokenData.name !== "SAX") {
+          if (token.name !== "SAX") {
+            return false;
+          }
+        }
+      }
+
       if (!searchValue) return true;
       if (
         token.name.toLowerCase().includes(searchValue.toLowerCase()) ||
