@@ -54,7 +54,8 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
     if (publicKey) {
       (async () => {
         try {
-          swapTokenStore.swapTokens.map(async (token) => {
+          token_list.map(async (token) => {
+            // swapTokenStore.swapTokens.map(async (token) => {
             const address = parseKey(token.mint);
             if (token.name === "SOL") {
               const amount = await connection.getBalance(publicKey as PublicKey);
@@ -85,7 +86,8 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   // handle to get SOL/SPL token balance of connected wallet
   const getBalance = async () => {
     try {
-      swapTokenStore.swapTokens.map(async (token) => {
+      token_list.map(async (token) => {
+        // swapTokenStore.swapTokens.map(async (token) => {
         const address = parseKey(token.mint);
         if (token.name === "SOL") {
           const amount = await connection.getBalance(publicKey as PublicKey);
