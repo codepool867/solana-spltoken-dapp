@@ -6,7 +6,7 @@ import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 import { Button, Col, Container, Image, Notification, Page, Row } from "components";
 import { useSDKInit, useTokenInfo } from "contexts";
-import { airdrop_list, generateTransactionLink, handleErrors, network } from "utils";
+import { airdrop_list, formatBalanceToString, generateTransactionLink, handleErrors, network } from "utils";
 import mainActionStore from "store/mainActionStore";
 import { observer } from "mobx-react-lite";
 // airdrop page for only devnet
@@ -92,7 +92,7 @@ const Airdrop = () => {
                       {mainActionStore.isActionLoading && mainActionStore.index === id ? <ClipLoader size={25} color="white" /> : "Claim"}
                     </Button>
                   </Row>
-                  <p className="text-[14px] text-gray-500 px-1">Balance: {balance[airdrop.name]}</p>
+                  <p className="text-[14px] text-gray-500 px-1">Balance: {formatBalanceToString(balance[airdrop.name])}</p>
                 </Col>
               ))}
             </Col>
