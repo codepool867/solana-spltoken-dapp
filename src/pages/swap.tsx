@@ -60,24 +60,6 @@ const Swap = () => {
           setInputTokenData(fromTokenData);
           setOutputTokenData(toTokenData);
           setPoolPublckey(poolPublicKey);
-          // if (faucet && inputTokenData && outputTokenData && inputAmount) {
-          //   const provider = faucet.provider;
-          //   const sdk = new SDK(provider);
-
-          //   const pool = await WeightedPool.load(sdk, new PublicKey(poolPublicKey));
-          //   if (pool && vault) {
-          //     // Notification({ title: "Swapping...", message: "Preparing Transaction" });
-          //     mainActionStore.setIsTXLoading(true);
-
-          //     const { result: outAmount, tx } = await pool.swapAndResult({
-          //       vault,
-          //       fromMintK: new PublicKey(inputTokenData.mint),
-          //       toMintK: new PublicKey(outputTokenData.mint),
-          //       amount: inputAmount,
-          //     });
-          //     setOutputAmount(outAmount);
-          //   }
-          // }
         } catch (error) {
           handleErrors(error);
         } finally {
@@ -124,6 +106,9 @@ const Swap = () => {
       setOutputAmount(0);
     }
   }, [inputTokenData, outputTokenData, faucet, vault, inputAmount, setOutputAmount, poolPublicKey]);
+  useEffect(() => {
+    console.log(inputAmount, "====");
+  }, [inputAmount]);
 
   const ref = useDetectClickOutside({
     onTriggered: () => setIsOpen(false),

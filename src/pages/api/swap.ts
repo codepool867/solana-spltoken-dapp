@@ -30,8 +30,6 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       poolPublicKey = pool_list[1].public_key;
     }
   }
-  console.log("============");
-  console.log(fromTokenData, toTokenData, poolPublicKey);
   res.send({ fromTokenData: fromTokenData, toTokenData: toTokenData, poolPublicKey: poolPublicKey });
 };
 export default handler;

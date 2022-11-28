@@ -43,6 +43,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/aos": "^3.0.4",
+    "@types/lodash": "^4.14.190",
     "@types/node": "18.11.5",
     "@types/nprogress": "^0.2.0",
     "@types/react": "18.0.22",

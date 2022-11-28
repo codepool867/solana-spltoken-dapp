@@ -41,7 +41,7 @@ const Liquidity = () => {
       <Container className="py-10">
         {poolDetail && (
           <Col className="max-w-[560px] w-full mx-auto space-y-8">
-            <Row action={() => router.back()} className="relative animate-border w-fit items-center space-x-2 cursor-pointer">
+            <Row action={() => router.push("/pools")} className="relative animate-border w-fit items-center space-x-2 cursor-pointer">
               <IoChevronBackCircleOutline fontSize={35} />
               <p className="uppercase text-[24px]">Back </p>
             </Row>

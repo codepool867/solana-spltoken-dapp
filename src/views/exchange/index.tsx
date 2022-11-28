@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { TbChevronDown } from "react-icons/tb";
 
@@ -6,13 +6,17 @@ import { Border, Image, Row } from "components";
 import { useTokenInfo } from "contexts";
 import { floatNumRegex, formatBalanceToString, SelectedTokenType, type ExchangeProps, type PairProps } from "utils";
 import mainActionStore from "store/mainActionStore";
+import { debounce } from "lodash";
 // if direction is 0, input token. direction is 1, output token
 const Exchange = ({ direction }: ExchangeProps) => {
   const { setSelectedTokenType, inputTokenData, outputTokenData, setInputAmount, balance, outputAmount } = useTokenInfo();
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLInputElement>(null);
   const [tokenData, setTokenData] = useState<PairProps | undefined>();
-
+  const inputAmountHandler = (event: any) => {
+    setInputAmount(event.target.value);
+  };
+  const debouncedSetInputAmount = useCallback(debounce(inputAmountHandler, 600), []);
   useEffect(() => {
     if (direction === 0) {
       setTokenData(inputTokenData);
@@ -75,7 +79,7 @@ const Exchange = ({ direction }: ExchangeProps) => {
           placeholder={direction === 0 ? "0.00" : `${outputAmount}`}
           readOnly={direction === 1}
           step="any"
-          onChange={(e: any) => setInputAmount(e.target.value)}
+          onChange={debouncedSetInputAmount}
           className={`${direction === 1 && "cursor-default"} w-full bg-transparent outline-none text-right text-[18px] font-bold`}
         />
       </Row>
