@@ -54,7 +54,7 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
     if (publicKey) {
       getBalance();
     }
-  }, [publicKey]);
+  }, [publicKey, connection]);
 
   // handle to get SOL/SPL token balance of connected wallet
   const getBalance = async () => {
