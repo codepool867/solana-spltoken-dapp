@@ -37,12 +37,15 @@ const Swap = () => {
     balance,
     getBalance,
     setOutputAmount,
+    setInputAmount,
   } = useTokenInfo();
-  const [hasOrder, setHasOrder] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [poolPublicKey, setPoolPublckey] = useState("");
   const router = useRouter();
   // const { from, to } = router.query;
+  useEffect(() => {
+    setInputAmount(0);
+  }, [router.pathname, setInputAmount]);
   useEffect(() => {
     const { from, to } = router.query;
     if (from && to) {
@@ -57,24 +60,24 @@ const Swap = () => {
           setInputTokenData(fromTokenData);
           setOutputTokenData(toTokenData);
           setPoolPublckey(poolPublicKey);
-          if (faucet && inputTokenData && outputTokenData && inputAmount) {
-            const provider = faucet.provider;
-            const sdk = new SDK(provider);
+          // if (faucet && inputTokenData && outputTokenData && inputAmount) {
+          //   const provider = faucet.provider;
+          //   const sdk = new SDK(provider);
 
-            const pool = await WeightedPool.load(sdk, new PublicKey(poolPublicKey));
-            if (pool && vault) {
-              // Notification({ title: "Swapping...", message: "Preparing Transaction" });
-              mainActionStore.setIsTXLoading(true);
+          //   const pool = await WeightedPool.load(sdk, new PublicKey(poolPublicKey));
+          //   if (pool && vault) {
+          //     // Notification({ title: "Swapping...", message: "Preparing Transaction" });
+          //     mainActionStore.setIsTXLoading(true);
 
-              const { result: outAmount, tx } = await pool.swapAndResult({
-                vault,
-                fromMintK: new PublicKey(inputTokenData.mint),
-                toMintK: new PublicKey(outputTokenData.mint),
-                amount: inputAmount,
-              });
-              setOutputAmount(outAmount);
-            }
-          }
+          //     const { result: outAmount, tx } = await pool.swapAndResult({
+          //       vault,
+          //       fromMintK: new PublicKey(inputTokenData.mint),
+          //       toMintK: new PublicKey(outputTokenData.mint),
+          //       amount: inputAmount,
+          //     });
+          //     setOutputAmount(outAmount);
+          //   }
+          // }
         } catch (error) {
           handleErrors(error);
         } finally {
@@ -84,19 +87,25 @@ const Swap = () => {
     }
   }, [router.query, setInputTokenData, setOutputTokenData, setPoolPublckey]);
   useEffect(() => {
+    setOutputAmount(0);
     const { from, to } = router.query;
     if (from === undefined && inputTokenData && outputTokenData) {
       router.push(`/swap?from=${inputTokenData.mint}&to=${outputTokenData.mint}`);
     } else if (from === undefined && inputTokenData === undefined) {
       router.push(default_link);
+    } else if (from === undefined && inputTokenData && outputTokenData === undefined) {
+      router.push(`/swap?from=${inputTokenData.mint}`);
     }
-  }, [inputTokenData, outputTokenData, router]);
+    if (inputTokenData && outputTokenData && inputTokenData.mint === outputTokenData.mint) {
+      setOutputTokenData(undefined);
+      router.push(`/swap?from=${inputTokenData.mint}`);
+    }
+  }, [inputTokenData, outputTokenData, router, setOutputTokenData]);
   useEffect(() => {
     if (faucet && inputTokenData && outputTokenData && inputAmount && poolPublicKey) {
       const provider = faucet.provider;
       const sdk = new SDK(provider);
       (async () => {
-        console.log(poolPublicKey, "===========");
         const pool = await WeightedPool.load(sdk, new PublicKey(poolPublicKey));
         if (pool && vault) {
           // Notification({ title: "Swapping...", message: "Preparing Transaction" });

@@ -44,16 +44,16 @@ const TokenModal = () => {
   };
   const result = swapTokenStore.swapTokens.filter((token) => {
     if (token) {
-      if (selectedTokenType === SelectedTokenType.Input && outputTokenData) {
-        if (token.mint === outputTokenData.mint) {
-          return false;
-        }
-        if (outputTokenData.name !== "SAX") {
-          if (token.name !== "SAX") {
-            return false;
-          }
-        }
-      }
+      // if (selectedTokenType === SelectedTokenType.Input && outputTokenData) {
+      //   if (token.mint === outputTokenData.mint) {
+      //     return false;
+      //   }
+      //   if (outputTokenData.name !== "SAX") {
+      //     if (token.name !== "SAX") {
+      //       return false;
+      //     }
+      //   }
+      // }
       if (selectedTokenType === SelectedTokenType.Output && inputTokenData) {
         if (token.mint === inputTokenData.mint) {
           return false;
