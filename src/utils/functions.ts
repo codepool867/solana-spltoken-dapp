@@ -32,7 +32,8 @@ export const formatBalance = (balance: number, mintAddress: string, decimal: num
   });
   return TokenAmount.toUiAmountSync({ amount: new BN(balance), token: token });
 };
-export const formatBalanceToString = (balance: number) => {
+export const formatBalanceToString = (balance: number | undefined) => {
+  if (balance === undefined) return "0";
   return balance.toLocaleString("en-US", { maximumFractionDigits: 4 });
 };
 // handle overflow

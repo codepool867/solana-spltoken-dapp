@@ -1,7 +1,15 @@
 import React, { type ChangeEvent, type FC, useState } from "react";
 
 import { Button, Col, Image, Notification, Row } from "components";
-import { floatNumRegex, generateTransactionLink, handleErrors, network, PoolProps, type PoolDetailProps } from "utils";
+import {
+  floatNumRegex,
+  formatBalanceToString,
+  generateTransactionLink,
+  handleErrors,
+  network,
+  PoolProps,
+  type PoolDetailProps,
+} from "utils";
 
 import { SDK, Vault, WeightedPool } from "solax-sdk/src";
 import { useSDKInit, useTokenInfo } from "contexts";
@@ -60,6 +68,7 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
           });
 
           signature = await sendTransaction(tx, connection, { minContextSlot });
+          Notification({ type: "success", title: "Submited", message: "Transaction is submited " });
           mainActionStore.setIsTXLoading(false);
           await connection.confirmTransaction({ blockhash, lastValidBlockHeight, signature });
           const link = generateTransactionLink(signature, network);
@@ -117,7 +126,7 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
               />
             )}
           </Row>
-          <p className="text-[14px] text-gray-500 px-1">Balance: {balance[pool.name]}</p>
+          <p className="text-[14px] text-gray-500 px-1">Balance: {formatBalanceToString(balance[pool.name])}</p>
         </Col>
       ))}
       <Button action={handleDeposit} className="mt-4">
