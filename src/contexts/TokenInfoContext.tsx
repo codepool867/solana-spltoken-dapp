@@ -52,7 +52,33 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     // when connect wallet, call getBalance()
     if (publicKey) {
-      getBalance();
+      (async () => {
+        try {
+          swapTokenStore.swapTokens.map(async (token) => {
+            const address = parseKey(token.mint);
+            if (token.name === "SOL") {
+              const amount = await connection.getBalance(publicKey as PublicKey);
+              const uiAmount = formatBalance(amount, token.mint, 9);
+              setBalance((balance: {}) => {
+                return { ...balance, SOL: Number(uiAmount) };
+              });
+              return uiAmount;
+            } else {
+              const result = await connection.getParsedTokenAccountsByOwner(publicKey as PublicKey, { mint: address as PublicKey });
+              if (result.value.length > 0) {
+                const parsedInfo = result.value[0].account.data.parsed;
+                const uiAmount = parsedInfo.info.tokenAmount.uiAmount;
+                setBalance((balance: {}) => {
+                  return { ...balance, [token.name]: Number(uiAmount) };
+                });
+                return uiAmount;
+              }
+            }
+          });
+        } catch (error) {
+          handleErrors(error);
+        }
+      })();
     }
   }, [publicKey, connection]);
 
