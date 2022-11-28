@@ -19,7 +19,7 @@ class SwapTokenStore {
   };
   constructor() {
     makeAutoObservable(this);
-    this.getTokensFromApi(1);
+    // this.getTokensFromApi(1);
   }
   resetTokens = () => {
     this.pageNumber = this.pageNumber + 1;
