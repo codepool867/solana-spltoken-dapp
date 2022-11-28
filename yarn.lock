@@ -6398,10 +6398,10 @@ socket.io-parser@~4.2.0:
     "@socket.io/component-emitter" "~3.1.0"
     debug "~4.3.1"
 
-solax-sdk@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/solax-sdk/-/solax-sdk-0.4.0.tgz#0700db35725a42cd39d15fad18fe498b912c82be"
-  integrity sha512-PzZC4PENXGjxNCruCRm6NeoTHQ6wNpiErnorlo/jSMWUaZB2suuRebSNWrVaFS57AgVuo9NM03BfB+NPUouYMQ==
+solax-sdk@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/solax-sdk/-/solax-sdk-0.4.1.tgz#2f3cd369563306753273d5f8e74c2e345f9525b3"
+  integrity sha512-oJYGaQIejjfwSji9IsgnmLChmKKu9h24AdksNjb025PcVq2Of+ypWZlMTPnwj0wWMVMMrzvUdDGJMs6iqQCU0w==
   dependencies:
     "@project-serum/anchor" "^0.25.0"
     "@solana/buffer-layout-utils" "^0.2.0"
