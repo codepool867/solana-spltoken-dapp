@@ -73,9 +73,11 @@ const Swap = () => {
     const { from, to } = router.query;
     if (from === undefined && inputTokenData && outputTokenData) {
       router.push(`/swap?from=${inputTokenData.mint}&to=${outputTokenData.mint}`);
-    } else if (from === undefined && inputTokenData === undefined) {
-      router.push(default_link);
-    } else if (from === undefined && inputTokenData && outputTokenData === undefined) {
+    }
+    // else if (from === undefined && inputTokenData === undefined) {
+    //   router.push(default_link);
+    // }
+    else if (from === undefined && inputTokenData && outputTokenData === undefined) {
       router.push(`/swap?from=${inputTokenData.mint}`);
     }
     if (inputTokenData && outputTokenData && inputTokenData.mint === outputTokenData.mint) {
