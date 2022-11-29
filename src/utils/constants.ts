@@ -174,8 +174,8 @@ export const POOL_LIST_ACTIVE = [
     volume_30d: 300000,
     fees_30d: 30,
     apr_30d: 80,
-    public_key: "8soCfP12Ph19mi914zQaZz2KsGGtcANVhVVfKAnmVRqM",
-    address: "8soCfP12Ph19mi914zQaZz2KsGGtcANVhVVfKAnmVRqM",
+    public_key: "7P8UDfPq82A5uLZHVivhp7iLPXyknLNpfSujwzFFPkZA",
+    address: "7P8UDfPq82A5uLZHVivhp7iLPXyknLNpfSujwzFFPkZA",
     name: "SAX66-PSOL22-USDC12",
   },
 ];
@@ -242,8 +242,8 @@ export const POOL_LIST_DUMMY = [
     volume_30d: 300000,
     fees_30d: 30,
     apr_30d: 80,
-    public_key: "8soCfP12Ph19mi914zQaZz2KsGGtcANVhVVfKAnmVRqM",
-    address: "8soCfP12Ph19mi914zQaZz2KsGGtcANVhVVfKAnmVRqM",
+    public_key: "7P8UDfPq82A5uLZHVivhp7iLPXyknLNpfSujwzFFPkZA",
+    address: "7P8UDfPq82A5uLZHVivhp7iLPXyknLNpfSujwzFFPkZA",
     name: "SAX66-PSOL22-USDC12",
   },
 ];
