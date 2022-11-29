@@ -1,10 +1,19 @@
 import React, { type ChangeEvent, type FC, useState, useEffect } from "react";
 
 import { Button, Col, Image, Notification, Row } from "components";
-import { floatNumRegex, formatBalance, generateTransactionLink, handleErrors, network, PoolProps, type PoolDetailProps } from "utils";
-import { SDK, Vault, WeightedPool } from "solax-sdk/src";
+import {
+  floatNumRegex,
+  formatBalance,
+  formatBalanceToString,
+  generateTransactionLink,
+  handleErrors,
+  network,
+  PoolProps,
+  type PoolDetailProps,
+} from "utils";
+import { SDK, WeightedPool } from "solax-sdk/src";
 import { useSDKInit, useTokenInfo } from "contexts";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import mainActionStore from "store/mainActionStore";
 const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
@@ -13,6 +22,7 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
   const { sendTransaction, publicKey } = useWallet();
   const { faucet, vault } = useSDKInit();
   const { connection } = useConnection();
+  const [maxOutAmount, setMaxOutAmount] = useState<number[]>([]);
   const [values, setValues] = useState<number[]>([]);
   const [userPoolAmount, setUserPoolAmount] = useState<number>(0);
   const { getBalance } = useTokenInfo();
@@ -24,13 +34,29 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
 
   useEffect(() => {
     (async () => {
-      if (faucet) {
+      if (faucet && vault) {
         const provider = faucet.provider;
         const sdk = new SDK(provider);
         const pool = await WeightedPool.load(sdk, new PublicKey(poolDetail.public_key));
-        const amount = await connection.getBalance(pool.data.poolMint);
-        setUserPoolAmount(amount);
-        //  const uiAmount = formatBalance(amount, token.mint, 9);
+        try {
+          mainActionStore.setIsActionLoading(true);
+          const result = await connection.getParsedTokenAccountsByOwner(publicKey as PublicKey, { mint: pool.data.poolMint });
+          if (result.value.length > 0) {
+            const parsedInfo = result.value[0].account.data.parsed;
+            const uiAmount = parsedInfo.info.tokenAmount.uiAmount;
+            setUserPoolAmount(uiAmount);
+          }
+          const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
+            vault,
+            amount: userPoolAmount,
+          });
+          console.log(outAmount);
+          setMaxOutAmount(outAmount);
+        } catch (error) {
+          handleErrors(error);
+        } finally {
+          mainActionStore.setIsActionLoading(false);
+        }
       }
     })();
   }, []);
@@ -70,7 +96,6 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
           const link = generateTransactionLink(signature, network);
           Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
           getBalance();
-          setValues([]);
         } else {
         }
 
@@ -131,14 +156,13 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
               name={pool.name}
               min={0}
               pattern={`${floatNumRegex}`}
-              placeholder="0.00"
+              placeholder={maxOutAmount[index] ? `${formatBalanceToString((maxOutAmount[index] * percentageAmount) / 100)}` : "0.00"}
               step="any"
               readOnly
-              onChange={handleChange}
               className={`w-full bg-transparent outline-none text-right text-[24px] font-bold`}
             />
           </Row>
-          <p className="text-[14px] text-gray-500 px-1">Max Withdrawal: 0</p>
+          <p className="text-[14px] text-gray-500 px-1">Max Withdrawal: {formatBalanceToString(maxOutAmount[index])}</p>
         </Col>
       ))}
       <Button action={handleWithdraw} className="mt-4">

@@ -106,9 +106,6 @@ const Swap = () => {
       setOutputAmount(0);
     }
   }, [inputTokenData, outputTokenData, faucet, vault, inputAmount, setOutputAmount, poolPublicKey]);
-  useEffect(() => {
-    console.log(inputAmount, "====");
-  }, [inputAmount]);
 
   const ref = useDetectClickOutside({
     onTriggered: () => setIsOpen(false),
@@ -156,12 +153,6 @@ const Swap = () => {
         const provider = faucet.provider;
         const sdk = new SDK(provider);
 
-        // let poolPublicKey = new PublicKey(pool_list[0].public_key);
-        // const swapNamePair = inputTokenData.name + outputTokenData.name;
-
-        // if (swapNamePair === "SAXUSDT" || swapNamePair === "USDTSAX") {
-        //   poolPublicKey = new PublicKey(pool_list[1].public_key);
-        // }
         const pool = await WeightedPool.load(sdk, new PublicKey(poolPublicKey));
 
         if (pool && vault) {
@@ -240,7 +231,7 @@ const Swap = () => {
                             onChange={(e) => {
                               handleInputSlippageValue(e.target.value);
                             }}
-                            className=" h-6 w-full bg-transparent  p-2 outline-none font-thin"
+                            className=" h-6 w-full bg-transparent  p-2 outline-none font-thin text-sm"
                           ></input>
                         </Row>
                       </div>

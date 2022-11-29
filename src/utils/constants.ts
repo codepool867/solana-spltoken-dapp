@@ -37,14 +37,14 @@ export const seo_list: { [any: string]: SeoProps } = {
   swap: {
     title: "SOLA-X | SWAP",
     description:
-      "$SAX token holders can stake their tokens a earn trading rewards or trade with discounts. $SAX staking will also be part of smart liquidity routing.",
+      "Smart liquidity protocol powered by Solana.",
     image: "/preview/default.png",
     canonical: "swap",
   },
   pools: {
     title: "SOLA-X | POOLS",
     description:
-      "$SAX token holders can stake their tokens a earn trading rewards or trade with discounts. $SAX staking will also be part of smart liquidity routing.",
+      "$SAX token holders can stake their tokens to earn trading rewards or trade with discounts. $SAX staking will also be part of smart liquidity routing.",
     image: "/preview/default.png",
     canonical: "pools",
   },
@@ -56,13 +56,13 @@ export const seo_list: { [any: string]: SeoProps } = {
   },
   404: {
     title: "404 | Page Not Found",
-    description: "Smart liquidity cross-chain protocol powered by Solana.",
+    description: "Smart liquidity protocol powered by Solana.",
     image: "/preview/default.png",
     canonical: "404",
   },
   500: {
     title: "500 | Server Error",
-    description: "Smart liquidity cross-chain protocol powered by Solana.",
+    description: "Smart liquidity protocol powered by Solana.",
     image: "/preview/default.png",
     canonical: "500",
   },
@@ -91,7 +91,7 @@ export const resource_list = [
   { name: "white paper", path: "https://drive.google.com/file/d/1eA3K8mfEG_SUN2VF_9r8Of2k23p8i3j7/view?usp=sharing" },
   { name: "pitch deck", path: "https://drive.google.com/file/d/1FA8TMHwu3aRvvCG6FfYvyWXuSIY0qPY-/view?usp=sharing" },
   // { name: "coingecko", path: "" },
-  // { name: "coinmarketcap", path: "" },
+  { name: "coinmarketcap", path: "https://coinmarketcap.com/currencies/sola-x/ico/" },
 ];
 
 // contact list
@@ -124,14 +124,13 @@ export const token_list = [
 ];
 
 export const prefer_token_list = [
-  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  // { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
   { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
   { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
 ];
 
 // pool list
-
 export const pool_list = [
   {
     pairs: [

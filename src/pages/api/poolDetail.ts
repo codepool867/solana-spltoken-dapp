@@ -4,9 +4,9 @@ import { pool_list_test } from "utils";
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { address } = req.query;
   if (address) {
-    console.log(address);
+    // console.log(address);
     let i: number;
-    console.log(pool_list_test.length);
+    // console.log(pool_list_test.length);
     for (i = 0; i < pool_list_test.length; i++) {
       if (pool_list_test[i].address === address) {
         break;

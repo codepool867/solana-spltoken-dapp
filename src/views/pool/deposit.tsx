@@ -26,13 +26,11 @@ const PoolDeposit: FC<PoolDetailProps> = ({ poolDetail }) => {
   const { balance, getBalance } = useTokenInfo();
 
   const handleChange = (index: number, amount: number) => {
-    console.log(index, amount);
     setValues((prevState) => {
       let newValues = [...prevState];
       newValues[index] = amount;
       return newValues;
     });
-    console.log(values);
   };
 
   const handleDeposit = async () => {

@@ -33,7 +33,6 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
   });
   const observer = useRef<IntersectionObserver>();
   const lastPoolElementRef = useCallback((node: any) => {
-    // console.log(poolStore.pageNumber, poolStore.pools.length);
     if (mainActionStore.isActionLoading) return;
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
