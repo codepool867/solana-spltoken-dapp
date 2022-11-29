@@ -6,6 +6,7 @@ import SOL from "assets/images/sol.png";
 import SAX from "assets/images/sola-x.png";
 import USDC from "assets/images/usdc.png";
 import USDT from "assets/images/usdt.png";
+import PSOL from "assets/images/psol.png";
 
 // const SOL
 // const USDT_ICON = "https://cdn.jsdelivr.net/gh/saber-hq/spl-token-icons@master/icons/101/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB.svg"
@@ -78,7 +79,7 @@ export const airdrop_list = [
 // menu list
 export const menu_list = [
   { name: "Swap", path: "/swap", condition: "mainnet | devnet" },
-  { name: "Pools", path: "/pools?view=grid", condition: "mainnet | devnet" },
+  { name: "Pools", path: "/pools?view=list", condition: "mainnet | devnet" },
   { name: "Airdrop", path: "/airdrop", condition: "devnet" },
   // { name: "$Sax Token", path: "https://solax.so/details" },
   { name: "Docs", path: "https://docs.solax.so/", condition: "mainnet | devnet" },
@@ -100,7 +101,7 @@ export const contact_list = [{ name: "hello@solax.app" }];
 export const slippage_list = [{ value: 0.1 }, { value: 0.5 }, { value: 1.0 }];
 
 // social list
-export const SOCIAL_LIST = [
+export const social_list = [
   { label: "Twitter", icon: Twitter, path: "https://twitter.com/solaxapp" },
   { label: "Medium", icon: Medium, path: "https://medium.com/@solaxapp" },
   { label: "Discord", icon: Discord, path: "https://discord.gg/SfkybtttdC" },
@@ -163,6 +164,20 @@ export const POOL_LIST_ACTIVE = [
     address: "78zodeD2ZkiuKy5YWjY3m3B9w2zcLJHicbkwN7iEJYqH",
     name: "SAX80-USDT20",
   },
+  {
+    pairs: [
+      { name: "SAX", icon: SAX, symbol: "SAX", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+      { name: "PSOL", icon: PSOL, symbol: "PSOL", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+      { name: "USDC", icon: USDC, symbol: "USDC", alt: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
+    ],
+    liquidity: 200000,
+    volume_30d: 300000,
+    fees_30d: 30,
+    apr_30d: 80,
+    public_key: "8soCfP12Ph19mi914zQaZz2KsGGtcANVhVVfKAnmVRqM",
+    address: "8soCfP12Ph19mi914zQaZz2KsGGtcANVhVVfKAnmVRqM",
+    name: "SAX66-PSOL22-USDC12",
+  },
 ];
 export const POOL_LIST_DUMMY = [
   {
@@ -216,6 +231,20 @@ export const POOL_LIST_DUMMY = [
     public_key: "49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY",
     address: "49mxKUMU1SScrXF9ySUGKqmUAUPEUDbdALjuf7YM1anY",
     name: "SAX-USDT",
+  },
+  {
+    pairs: [
+      { name: "SAX", icon: SAX, symbol: "SAX", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+      { name: "PSOL", icon: PSOL, symbol: "PSOL", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+      { name: "USDC", icon: USDC, symbol: "USDC", alt: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
+    ],
+    liquidity: 200000,
+    volume_30d: 300000,
+    fees_30d: 30,
+    apr_30d: 80,
+    public_key: "8soCfP12Ph19mi914zQaZz2KsGGtcANVhVVfKAnmVRqM",
+    address: "8soCfP12Ph19mi914zQaZz2KsGGtcANVhVVfKAnmVRqM",
+    name: "SAX66-PSOL22-USDC12",
   },
 ];
 

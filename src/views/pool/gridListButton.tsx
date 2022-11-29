@@ -1,3 +1,4 @@
+import { Row } from "components";
 import type { FC, PropsWithChildren } from "react";
 import React from "react";
 
@@ -12,7 +13,7 @@ const GridListButton: FC<GridStatusProps> = ({ action, isLoading, gridStatus }) 
     listButtonStyle = listButtonStyle + " bg-primary_gradient_hover";
   }
   return (
-    <>
+    <Row className="tablet:hidden">
       <button onClick={action} className={gridButtonStyle} disabled={gridStatus}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +54,7 @@ const GridListButton: FC<GridStatusProps> = ({ action, isLoading, gridStatus }) 
           <line x1="3" y1="18" x2="3.01" y2="18"></line>
         </svg>
       </button>
-    </>
+    </Row>
   );
 };
 
