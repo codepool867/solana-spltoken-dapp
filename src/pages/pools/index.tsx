@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 const Pools = () => {
   const wallet = useWallet();
   const [searchValue, setSearchValue] = useState<string>("");
-  const [gridStatus, setGridStatus] = useState<boolean>(true);
+  const [gridStatus, setGridStatus] = useState<boolean>(false);
   const router = useRouter();
   useEffect(() => {
     const { view } = router.query;

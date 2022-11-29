@@ -49,7 +49,7 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
   };
   let gridStyle = "z-50 w-full  grid-cols-1 max-w-[560px] laptop:max-w-[560px] gap-6 z-[999] ";
   if (gridStatus) {
-    gridStyle = " w-full grid-cols-2  gap-6 z-[999]";
+    gridStyle = " w-full grid-cols-2 tablet:grid-cols-1  gap-6 z-[999]";
   }
   return (
     <Grid className={gridStyle}>
