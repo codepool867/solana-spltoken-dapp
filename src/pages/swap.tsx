@@ -195,12 +195,7 @@ const Swap = () => {
       <Container>
         <Col className="relative w-full items-center justify-center">
           <LaunchApp title="swap" />
-          <div
-            data-aos="fade-in"
-            data-aos-duration="2000"
-            data-aos-delay="1500"
-            className="max-w-[540px] w-full bg-card_gradient6 rounded-[20px] p-[2px]"
-          >
+          <div className="max-w-[540px] w-full bg-card_gradient6 rounded-[20px] p-[2px] z-[999]">
             <Col className="bg-copy_right bg-opacity-80 rounded-[20px] p-[30px] normal:px-[15px] normal:py-[20px] justify-between h-full space-y-[12px]">
               <Exchange direction={0} />
               <div className="p-2">

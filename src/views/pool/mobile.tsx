@@ -47,12 +47,12 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
     poolStore.setDetailPoolIndex(poolAddress);
     router.push(`pools/${poolAddress}`);
   };
-  let gridStyle = "z-50 w-1/2  grid-cols-1 max-w-[560px] laptop:max-w-[560px] gap-6 ";
+  let gridStyle = "z-50 w-1/2  grid-cols-1 max-w-[560px] laptop:max-w-[560px] gap-6 z-[999] ";
   if (gridStatus) {
-    gridStyle = " w-full grid-cols-2 laptop:grid-cols-1 laptop:max-w-[560px] gap-6";
+    gridStyle = " w-full grid-cols-2 laptop:grid-cols-1 laptop:max-w-[560px] gap-6 z-[999]";
   }
   return (
-    <Grid animate="fade-in" delay="2000" className={gridStyle}>
+    <Grid className={gridStyle}>
       {result.length > 0 ? (
         result.map((pool, index) => (
           <div
