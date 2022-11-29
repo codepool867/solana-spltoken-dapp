@@ -3,7 +3,7 @@ import React, { type FC, type PropsWithChildren, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 import { Image, Row } from "components";
-import { pool_list, type SearchProps, table_head_list } from "utils";
+import { POOL_LIST_ACTIVE, type SearchProps, table_head_list } from "utils";
 
 // todo: It is not used, now. It might need later
 
@@ -13,7 +13,7 @@ const PoolDesktop: FC<PropsWithChildren & SearchProps> = ({ searchValue }) => {
   const endOffSet = startOffSet + 10;
 
   const handleNext = () => {
-    if (pageNum < Math.ceil(pool_list.length / 10)) {
+    if (pageNum < Math.ceil(POOL_LIST_ACTIVE.length / 10)) {
       setPageNum(pageNum + 1);
     }
   };
@@ -44,7 +44,7 @@ const PoolDesktop: FC<PropsWithChildren & SearchProps> = ({ searchValue }) => {
           </tr>
         </thead>
         <tbody>
-          {pool_list.slice(startOffSet, endOffSet).map((pool, index) => (
+          {POOL_LIST_ACTIVE.slice(startOffSet, endOffSet).map((pool, index) => (
             <tr
               key={`pool_tr_${index}`}
               className="font-medium text-[16px] last:text-[14px] normal:text-center leading-[192.5%] hover:bg-slate-600 cursor-pointer"
@@ -79,13 +79,13 @@ const PoolDesktop: FC<PropsWithChildren & SearchProps> = ({ searchValue }) => {
               className="space-x-[10px] pt-[36px] mobile:pt-[22px] pr-[80px] laptop:px-[20%] pb-[33px] mobile:pb-[24px] text-right laptop:text-center"
             >
               <p className="inline-flex font-semibold text-[16px] last:text-[14px] leading-[192.5%]">
-                {(pageNum - 1) * 10 + 1}-{pageNum === Math.ceil(pool_list.length / 10) ? pool_list.length : 10 * pageNum} of{" "}
-                {pool_list.length}
+                {(pageNum - 1) * 10 + 1}-{pageNum === Math.ceil(POOL_LIST_ACTIVE.length / 10) ? POOL_LIST_ACTIVE.length : 10 * pageNum} of{" "}
+                {POOL_LIST_ACTIVE.length}
               </p>
               <AiOutlineLeft onClick={handlePrev} className={`${pageNum === 1 && "opacity-60"} inline-flex cursor-pointer`} />
               <AiOutlineRight
                 onClick={handleNext}
-                className={`${pageNum === Math.ceil(pool_list.length / 10) && "opacity-60"} inline-flex cursor-pointer`}
+                className={`${pageNum === Math.ceil(POOL_LIST_ACTIVE.length / 10) && "opacity-60"} inline-flex cursor-pointer`}
               />
             </td>
           </tr>

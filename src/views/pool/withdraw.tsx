@@ -11,9 +11,9 @@ import {
   PoolProps,
   type PoolDetailProps,
 } from "utils";
-import { SDK, WeightedPool } from "solax-sdk/src";
+import { SDK, Vault, WeightedPool } from "solax-sdk/src";
 import { useSDKInit, useTokenInfo } from "contexts";
-import { PublicKey } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import mainActionStore from "store/mainActionStore";
 const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
@@ -34,29 +34,23 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
 
   useEffect(() => {
     (async () => {
-      if (faucet && vault) {
+      if (faucet && vault && connection) {
         const provider = faucet.provider;
         const sdk = new SDK(provider);
         const pool = await WeightedPool.load(sdk, new PublicKey(poolDetail.public_key));
-        try {
-          mainActionStore.setIsActionLoading(true);
-          const result = await connection.getParsedTokenAccountsByOwner(publicKey as PublicKey, { mint: pool.data.poolMint });
-          if (result.value.length > 0) {
-            const parsedInfo = result.value[0].account.data.parsed;
-            const uiAmount = parsedInfo.info.tokenAmount.uiAmount;
-            setUserPoolAmount(uiAmount);
-          }
-          const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
-            vault,
-            amount: userPoolAmount,
-          });
-          console.log(outAmount);
-          setMaxOutAmount(outAmount);
-        } catch (error) {
-          handleErrors(error);
-        } finally {
-          mainActionStore.setIsActionLoading(false);
+
+        // const amount = await connection.getBalance(pool.data.poolMint);
+        const result = await connection.getParsedTokenAccountsByOwner(publicKey as PublicKey, { mint: pool.data.poolMint });
+        if (result.value.length > 0) {
+          const parsedInfo = result.value[0].account.data.parsed;
+          const uiAmount = parsedInfo.info.tokenAmount.uiAmount;
+          setUserPoolAmount(uiAmount);
         }
+        const { result: outAmount, tx } = await pool.removeLiquidityAndResult({
+          vault,
+          amount: userPoolAmount,
+        });
+        setMaxOutAmount(outAmount);
       }
     })();
   }, []);
@@ -96,6 +90,7 @@ const PoolWithdraw: FC<PoolDetailProps> = ({ poolDetail }) => {
           const link = generateTransactionLink(signature, network);
           Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
           getBalance();
+          setValues([]);
         } else {
         }
 

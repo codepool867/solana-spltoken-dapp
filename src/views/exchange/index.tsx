@@ -76,7 +76,7 @@ const Exchange = ({ direction }: ExchangeProps) => {
           type="number"
           min={0}
           pattern={`${floatNumRegex}`}
-          placeholder={direction === 0 ? "0.00" : `${outputAmount}`}
+          placeholder={direction === 0 ? "0.00" : `${formatBalanceToString(outputAmount)}`}
           readOnly={direction === 1}
           step="any"
           onChange={debouncedSetInputAmount}

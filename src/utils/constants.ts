@@ -36,8 +36,7 @@ export enum SelectedTokenType {
 export const seo_list: { [any: string]: SeoProps } = {
   swap: {
     title: "SOLA-X | SWAP",
-    description:
-      "Smart liquidity protocol powered by Solana.",
+    description: "Smart liquidity protocol powered by Solana.",
     image: "/preview/default.png",
     canonical: "swap",
   },
@@ -70,7 +69,7 @@ export const seo_list: { [any: string]: SeoProps } = {
 
 // airdrop_list
 export const airdrop_list = [
-  // { name: "SOL", symbol: "SOL", icon: SOL, alt: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  { name: "SOL", symbol: "SOL", icon: SOL, alt: "SOL", mint: "So11111111111111111111111111111111111111112" },
   { name: "SAX", symbol: "SAX", icon: SAX, alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", symbol: "USDC", icon: USDC, alt: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
   { name: "USDT", symbol: "USDT", icon: USDT, alt: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
@@ -106,9 +105,15 @@ export const social_list = [
   { label: "Medium", icon: Medium, path: "https://medium.com/@solaxapp" },
   { label: "Discord", icon: Discord, path: "https://discord.gg/SfkybtttdC" },
 ];
-
-// token_list for swap
-export const token_list = [
+// TOKEN_LIST
+export const TOKEN_LIST = [
+  { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+  { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
+  { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
+  { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
+];
+// TOKEN_LIST_ACTIVE for swap
+export const TOKEN_LIST_ACTIVE = [
   // { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
   { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
@@ -123,7 +128,7 @@ export const token_list = [
   // { name: "USDT", icon: USDT, alt: "", balance: 900, symbol: "USDT", mint: "FeCtM4bXUGo8vGrvHUCZjybmesovZLkQqCGqMuhHUHfZ" },
 ];
 
-export const prefer_token_list = [
+export const TOKEN_LIST_FAVOURITE = [
   // { name: "SOL", icon: SOL, alt: "", balance: 50, symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
   { name: "SAX", icon: SAX, alt: "", balance: 500000, symbol: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
   { name: "USDC", icon: USDC, alt: "", balance: 4000, symbol: "USDC", mint: "AfWWqUHFzJFSxQHYn6PvyaoyswyodHgCTeDiRgovEmHX" },
@@ -131,7 +136,7 @@ export const prefer_token_list = [
 ];
 
 // pool list
-export const pool_list = [
+export const POOL_LIST_ACTIVE = [
   {
     pairs: [
       { name: "SAX", icon: SAX, symbol: "SAX", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },
@@ -159,7 +164,7 @@ export const pool_list = [
     name: "SAX80-USDT20",
   },
 ];
-export const pool_list_test = [
+export const POOL_LIST_DUMMY = [
   {
     pairs: [
       { name: "SAX", icon: SAX, symbol: "SAX", alt: "SAX", mint: "SAX2cChnuhnKfUDERWVHyd8CoeDNR4NjoxwjuW8uiqa" },

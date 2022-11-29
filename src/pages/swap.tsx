@@ -9,7 +9,7 @@ import { Button, Col, Container, LaunchApp, Notification, Page, Row } from "comp
 import { useTokenInfo } from "contexts";
 import mainActionStore from "store/mainActionStore";
 import { Exchange, TokenModal } from "views";
-import { default_link, generateTransactionLink, handleErrors, network, pool_list, slippage_list } from "utils";
+import { default_link, generateTransactionLink, handleErrors, network, POOL_LIST_ACTIVE, slippage_list } from "utils";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useSDKInit } from "contexts";
 import { PublicKey } from "@solana/web3.js";
@@ -119,9 +119,10 @@ const Swap = () => {
     setSlippageValue(result);
   };
   const handleHasOrder = () => {
-    const outputTokenDataRef = outputTokenData;
-    setOutputTokenData(inputTokenData);
-    setInputTokenData(outputTokenDataRef);
+    // const outputTokenDataRef = outputTokenData;
+    // setOutputTokenData(inputTokenData);
+    // setInputTokenData(outputTokenDataRef);
+    router.push(`/swap?from=${outputTokenData?.mint}&to=${inputTokenData?.mint}`);
   };
 
   const handleSwap = async () => {

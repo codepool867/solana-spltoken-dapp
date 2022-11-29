@@ -4,7 +4,7 @@ import { TfiClose } from "react-icons/tfi";
 
 import { Image, Modal, Col, Row } from "components";
 import { useTokenInfo } from "contexts";
-import { formatBalanceToString, prefer_token_list, SelectedTokenType, type PairProps } from "utils";
+import { formatBalanceToString, TOKEN_LIST_FAVOURITE, SelectedTokenType, type PairProps } from "utils";
 import { observer } from "mobx-react-lite";
 import swapTokenStore from "store/swapTokenStore";
 import mainActionStore from "store/mainActionStore";
@@ -14,7 +14,7 @@ const TokenModal = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   //handle server side pagination infinite scroll
 
-  const preferTokens = prefer_token_list;
+  const preferTokens = TOKEN_LIST_FAVOURITE;
 
   const observer = useRef<IntersectionObserver>();
   const router = useRouter();

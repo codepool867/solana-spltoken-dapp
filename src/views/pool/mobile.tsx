@@ -47,8 +47,8 @@ const PoolMobile: FC<PoolMobileProps> = ({ searchValue, gridStatus }) => {
     poolStore.setDetailPoolIndex(poolAddress);
     router.push(`pools/${poolAddress}`);
   };
-  let gridStyle = "z-50 w-1/2  grid-cols-1 max-w-[560px] laptop:max-w-[560px] gap-6 self-start";
-  if (gridStatus && result.length > 1) {
+  let gridStyle = "z-50 w-1/2  grid-cols-1 max-w-[560px] laptop:max-w-[560px] gap-6 ";
+  if (gridStatus) {
     gridStyle = " w-full grid-cols-2 laptop:grid-cols-1 laptop:max-w-[560px] gap-6";
   }
   return (

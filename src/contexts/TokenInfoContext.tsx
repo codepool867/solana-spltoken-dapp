@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
-import { formatBalance, handleErrors, token_list, parseKey, SelectedTokenType, type BalanceProps, type PairProps } from "utils";
+import { formatBalance, handleErrors, parseKey, SelectedTokenType, type BalanceProps, type PairProps, TOKEN_LIST } from "utils";
 import swapTokenStore from "store/swapTokenStore";
 import { observer } from "mobx-react-lite";
 export interface TokenInfoProps {
@@ -54,7 +54,7 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
     if (publicKey) {
       (async () => {
         try {
-          token_list.map(async (token) => {
+          TOKEN_LIST.map(async (token) => {
             // swapTokenStore.swapTokens.map(async (token) => {
             const address = parseKey(token.mint);
             if (token.name === "SOL") {
@@ -86,7 +86,7 @@ const TokenInfoProvider: FC<PropsWithChildren> = ({ children }) => {
   // handle to get SOL/SPL token balance of connected wallet
   const getBalance = async () => {
     try {
-      token_list.map(async (token) => {
+      TOKEN_LIST.map(async (token) => {
         // swapTokenStore.swapTokens.map(async (token) => {
         const address = parseKey(token.mint);
         if (token.name === "SOL") {
