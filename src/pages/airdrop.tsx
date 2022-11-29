@@ -53,7 +53,12 @@ const Airdrop = () => {
         const link = generateTransactionLink(signature, network);
         Notification({ type: "success", title: "Success", message: "Transaction is confirmed successfully", link });
       } catch (error) {
-        handleErrors(error);
+        // handleErrors(error);
+        Notification({
+          type: "error",
+          title: "Error",
+          message: "SOL faucet is reached to rate limit in your ip address. Please connect to VPN and try again..",
+        });
       } finally {
         getBalance();
         mainActionStore.setIsTXLoading(false);

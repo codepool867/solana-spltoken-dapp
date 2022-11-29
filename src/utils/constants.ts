@@ -78,7 +78,7 @@ export const airdrop_list = [
 // menu list
 export const menu_list = [
   { name: "Swap", path: "/swap", condition: "mainnet | devnet" },
-  { name: "Pools", path: "/pools", condition: "mainnet | devnet" },
+  { name: "Pools", path: "/pools?view=grid", condition: "mainnet | devnet" },
   { name: "Airdrop", path: "/airdrop", condition: "devnet" },
   // { name: "$Sax Token", path: "https://solax.so/details" },
   { name: "Docs", path: "https://docs.solax.so/", condition: "mainnet | devnet" },
@@ -100,7 +100,7 @@ export const contact_list = [{ name: "hello@solax.app" }];
 export const slippage_list = [{ value: 0.1 }, { value: 0.5 }, { value: 1.0 }];
 
 // social list
-export const social_list = [
+export const SOCIAL_LIST = [
   { label: "Twitter", icon: Twitter, path: "https://twitter.com/solaxapp" },
   { label: "Medium", icon: Medium, path: "https://medium.com/@solaxapp" },
   { label: "Discord", icon: Discord, path: "https://discord.gg/SfkybtttdC" },

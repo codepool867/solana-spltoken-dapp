@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Col, Row, Container, LaunchApp, Page } from "components";
 import { PoolMobile, PoolGridListButton } from "views";
+import { useRouter } from "next/router";
 
 // pools page
 const Pools = () => {
   const wallet = useWallet();
   const [searchValue, setSearchValue] = useState<string>("");
   const [gridStatus, setGridStatus] = useState<boolean>(true);
-
+  const router = useRouter();
+  useEffect(() => {
+    const { view } = router.query;
+    if (view === "list") {
+      setGridStatus(false);
+    } else {
+      setGridStatus(true);
+    }
+  }, [router]);
   const handleGrid = () => {
-    setGridStatus(!gridStatus);
+    if (gridStatus) {
+      router.push("/pools?view=list");
+    } else {
+      router.push("/pools?view=grid");
+    }
+    // setGridStatus(!gridStatus);
   };
   return (
     <Page name="pools">
